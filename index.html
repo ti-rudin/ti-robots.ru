@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ti TSL Bot - Binance Trailing Stop Bot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="bg-primary text-white p-3">
+        <h1>Ti TSL Bot</h1>
+  
+    </header>
+    <main class="container my-4">
+        <section class="hero text-center">
+            <h2>Добро пожаловать в мир автоматизированной торговли!</h2>
+            <p>Ti TSL Bot — ваш надежный помощник на рынке Binance.</p>
+
+        </section>
+        <section id="description">
+            <h2>Описание</h2>
+            <p>Ti TSL Bot — это автоматизированная система, обеспечивающая Trailing Stop Loss. Поддерживает одновременную торговлю по нескольким инструментам. Система использует асинхронную, событийно-ориентированную архитектуру с паттерном "Брокер-Воркер", что позволяет горизонтально масштабироваться. В качестве БД используется Redis для управления задачами, состоянием и блокировками.</p>
+        </section>
+        <section id="features">
+            <h2>Ключевые особенности</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Минималистичный интерфейс</h5>
+                            <p class="card-text">Простота использования и легкость развертывания.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Горизонтальная масштабируемость</h5>
+                            <p class="card-text">Добавление воркеров для увеличения производительности.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Реальное время</h5>
+                            <p class="card-text">Мгновенная реакция на рыночные изменения.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="architecture">
+            <h2>Архитектура</h2>
+            <p>Все сервисы запускаются через Docker Compose: Node-RED Core, микросервисы, и воркеры.</p>
+        </section>
+        <section id="strategy">
+            <h2>Торговая стратегия</h2>
+            <p>Система отслеживает покупку и автоматически выставляет стоп-лосс ордер, двигая его вслед за ценой. По завершении сделки отправляет отчет в Telegram и переходит в режим ожидания.</p>
+        </section>
+        <section id="reliability">
+            <h2>Надежность</h2>
+            <p>Система обладает высокой надежностью благодаря автоматическому резервному копированию состояния Redis, возможности быстрого восстановления и блокировкам данных.</p>
+        </section>
+        <section id="installation">
+            <h2>Установка и запуск</h2>
+            <pre><code>git clone [репозиторий]
+cd front/ && npm i
+cd ../node-red/ && npm i
+cd .. && docker-compose up -d</code></pre>
+        </section>
+        <section id="contact">
+            <h2>Контакты</h2>
+            <p>Приглашаем вступить в группу телеграм: <a href="https://t.me/ti_robots_lab">Ti ROBOTS LAB</a></p>
+    
+        </section>
+    </main>
+    <footer class="text-center p-3 bg-light">
+        <p>&copy; 2023 Ti TSL Bot. Все права защищены.</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
