@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.62.9",
+    "autoprefixer": "^10.4.21",
     "axios": "^1.8.4",
     "connect-history-api-fallback": "^1.6.0",
     "flowbite": "^2.2.0",
