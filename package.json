@@ -8,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@netlify/edge-functions": "^2.11.1",
     "@tanstack/vue-query": "^5.62.9",
     "autoprefixer": "^10.4.21",
     "axios": "^1.8.4",
