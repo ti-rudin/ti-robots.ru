@@ -220,7 +220,7 @@ export default {
 
       try {
         const res = await fetch(
-          `https://brams-demo.netlify.app/zayavka/?${params.toString()}`,
+          `https://ti-robots.netlify.app/zayavka/?${params.toString()}`,
           {
             method: "GET",
             headers: { Accept: "application/json" },
