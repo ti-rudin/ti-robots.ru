@@ -1,0 +1,11 @@
+[[headers]]
+  # Применяем к пути /zayavka/
+  for = "/zayavka/"
+
+  [headers.values]
+    # Разрешаем запросы с вашего фронтенд-домена
+    Access-Control-Allow-Origin = "https://ti-robots.ru"
+    # Разрешаем методы GET и OPTIONS (для preflight)
+    Access-Control-Allow-Methods = "GET, OPTIONS"
+    # Разрешаем заголовок Accept
+    Access-Control-Allow-Headers = "Accept"
