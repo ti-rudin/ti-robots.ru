@@ -5,7 +5,7 @@ export default async (req: Request, { cookies, geo }: Context) => {
     const url = new URL(req.url);
 
     const res = await fetch(
-        `https://api.telegram.org/bot8046970932:AAGjylWmUCKvq-tKafcPk9qaDkMqp7g1EhI/sendMessage?chat_id=-1004739864180&text=Имя: ${url.searchParams.get("name")} \n Телефон: ${url.searchParams.get("tel")}`,
+        `https://api.telegram.org/bot8046970932:AAGjylWmUCKvq-tKafcPk9qaDkMqp7g1EhI/sendMessage?chat_id=-1002650810148&text=Имя: ${url.searchParams.get("name")} \n Телефон: ${url.searchParams.get("tel")}`,
         {
           method: "GET",
           headers: {
