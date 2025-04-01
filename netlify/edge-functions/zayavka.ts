@@ -10,7 +10,10 @@ export default async (req: Request, { cookies, geo }: Context) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
+            "Accept": "application/json",
+            "Access-Control-Allow-Origin":"https://ti-robots.ru",
+            "Access-Control-Allow-Methods" : "GET, OPTIONS",
+            "Access-Control-Allow-Headers" : "Accept"
           },
         }
       );
