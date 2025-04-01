@@ -19,7 +19,11 @@ export default async (req: Request, { cookies, geo }: Context) => {
       );
  
     return new Response(JSON.stringify(res), {
-      headers: { "content-type": "text/html" }
+      headers: { "content-type": "text/html",
+        "Access-Control-Allow-Origin":"https://ti-robots.ru",
+        "Access-Control-Allow-Methods" : "GET, OPTIONS",
+        "Access-Control-Allow-Headers" : "Accept"
+       }
     });
   };
 export const config = { path: "/zayavka" };
