@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLoading" class="flex items-center justify-center min-h-screen">
-    <div class="text-lg">Loading...</div>
+    <div class="text-lg">{{ currentLanguage === 'ru' ? 'Загрузка...' : 'Loading...' }}</div>
   </div>
   <div v-else class="min-h-screen flex flex-col">
     <!-- Header -->
@@ -26,6 +26,38 @@
 
         <!-- Navigation Menu -->
         <div class="flex items-center lg:order-2">
+          <!-- Language Switcher -->
+          <div class="relative mr-2">
+            <button 
+              @click.stop="toggleLanguageDropdown"
+              class="flex items-center space-x-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            >
+              <span>{{ currentLanguage === 'ru' ? 'РУС' : 'ENG' }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div 
+              v-if="showLanguageDropdown"
+              class="absolute right-0 mt-1 w-24 bg-white dark:bg-gray-700 rounded-md shadow-lg z-50 border border-gray-200 dark:border-gray-600"
+            >
+              <button 
+                @click.stop="switchLanguage('ru')"
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                :class="{'bg-blue-100 dark:bg-blue-900': currentLanguage === 'ru'}"
+              >
+                Русский
+              </button>
+              <button 
+                @click.stop="switchLanguage('en')"
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                :class="{'bg-blue-100 dark:bg-blue-900': currentLanguage === 'en'}"
+              >
+                English
+              </button>
+            </div>
+          </div>
+          
           <!-- Theme Switch -->
           <button @click="toggleTheme"
             class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-2">
@@ -33,25 +65,7 @@
             <span v-else>🌙</span>
           </button>
 
-          <!-- User Menu -->
-          <div class="relative">
-
-
-            <!-- Dropdown Menu -->
-            <div v-if="isUserMenuOpen"
-              class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5">
-              <div class="py-1">
-
-                <a href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600">Профиль</a>
-                <a @click="handleLogout"
-                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer">Выход</a>
-
-
-              </div>
-            </div>
-          </div>
-
+    
           <!-- Mobile menu button -->
           <button @click="isMobileMenuOpen = !isMobileMenuOpen"
             class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -73,19 +87,16 @@
                 TSL Bot
               </router-link>
             </li>
-
-
-
-
             <li>
               <a class="pl-3 py-2 lg:p-0 block text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200"
                 href="https://github.com/ti-rudin/binance-tsl-bot" target="_blank">
-                Github Repo </a>
+                {{ currentLanguage === 'ru' ? 'Репозиторий GitHub' : 'GitHub Repo' }}
+              </a>
             </li>
             <li>
               <a href="https://t.me/ti_robots_lab" target="_blank"
                 class="pl-3 py-2 lg:p-0 block text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
-                Поддержка в Telegram
+                {{ currentLanguage === 'ru' ? 'Поддержка в Telegram' : 'Telegram Support' }}
               </a>
             </li>
           </ul>
@@ -110,7 +121,7 @@
         <span class="text-sm text-gray-500 dark:text-gray-400">
           Ti-ROBOTS TSL © {{ new Date().getFullYear() }} <a href="https://t.me/ti_robots_lab" target="_blank"
             class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
-            Поддержка в Telegram
+            {{ currentLanguage === 'ru' ? 'Поддержка в Telegram' : 'Telegram Support' }}
           </a>
         </span>
       </div>
@@ -118,11 +129,11 @@
   </div>
 
   <!-- Click Outside Handler -->
-  <div v-if="isUserMenuOpen || isMobileMenuOpen" class="fixed inset-0 z-10" @click="handleOutsideClick"></div>
+  <div v-if="isUserMenuOpen || isMobileMenuOpen || showLanguageDropdown" class="fixed inset-0 z-10" @click="handleOutsideClick"></div>
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, provide } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from './stores/auth'
 
@@ -136,6 +147,8 @@ export default {
     const isDarkMode = ref(false)
     const isUserMenuOpen = ref(false)
     const isMobileMenuOpen = ref(false)
+    const currentLanguage = ref(localStorage.getItem('preferredLanguage') || 'ru')
+    const showLanguageDropdown = ref(false)
 
     const isAuthenticated = computed(() => authStore.isAuthenticated)
     const userEmail = computed(() => authStore.userEmail)
@@ -162,9 +175,20 @@ export default {
       }
     }
 
+    const toggleLanguageDropdown = () => {
+      showLanguageDropdown.value = !showLanguageDropdown.value
+    }
+
+    const switchLanguage = (lang) => {
+      currentLanguage.value = lang
+      localStorage.setItem('preferredLanguage', lang)
+      showLanguageDropdown.value = false
+    }
+
     const closeMenus = () => {
       isUserMenuOpen.value = false
       isMobileMenuOpen.value = false
+      showLanguageDropdown.value = false
     }
 
     const handleLogout = async () => {
@@ -200,6 +224,12 @@ export default {
         return
       }
 
+      // Don't close menu if click was on language switcher
+      const languageSwitcher = document.querySelector('.relative.mr-2')
+      if (languageSwitcher && languageSwitcher.contains(e.target)) {
+        return
+      }
+
       closeMenus()
     }
 
@@ -210,14 +240,21 @@ export default {
       }, 100)
     }
 
+    // Provide currentLanguage to all child components
+    provide('currentLanguage', currentLanguage)
+
     return {
       isLoading,
       isDarkMode,
       isUserMenuOpen,
       isMobileMenuOpen,
+      currentLanguage,
+      showLanguageDropdown,
       isAuthenticated,
       userEmail,
       route,
+      toggleLanguageDropdown,
+      switchLanguage,
       closeMenus,
       handleLogout,
       toggleTheme,
