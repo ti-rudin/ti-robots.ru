@@ -28,6 +28,14 @@
         <!-- Main Content -->
         <div class="space-y-8">
 
+
+          <section>
+          
+            <div class="flex justify-center">
+              <img src="/stoploss.gif" alt="Анимация Trailing Stop Loss" width="auto"  />
+            </div>
+          </section>
+        
           <section>
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Описание</h2>
             <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -132,6 +140,7 @@ docker-compose up -d</code></pre>
 
            <section>
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">Фронтенд (Интерфейс управления)</h2>
+      
              <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
          
               Доступ к основному веб-интерфейсу для управления роботами осуществляется по адресу:<br><code class="text-sm bg-gray-200 dark:bg-gray-700 px-1 py-0.5 rounded text-red-600 dark:text-red-400">http://&lt;IP вашего сервера&gt;:3000</code>.
@@ -294,8 +303,9 @@ docker-compose up -d</code></pre>
   </div>
 </template>
 
+
 <script>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 
 export default {
   name: 'BotInfoPage',
@@ -309,6 +319,40 @@ export default {
       loading: false,
       error: null,
       success: null,
+    });
+
+    const prices = [30, 35, 32, 38, 45, 42, 50, 55, 52, 60, 65, 62, 70, 75, 72, 80, 85, 82, 90, 95];
+    const trailingStopLoss = [30];
+    let currentFrame = 0;
+
+    const updateAnimation = () => {
+      const priceLine = document.getElementById('priceLine');
+      const trailingStopLine = document.getElementById('trailingStopLine');
+
+      if (currentFrame < prices.length) {
+        const currentPrice = prices[currentFrame];
+        let trailingStop = trailingStopLoss[trailingStopLoss.length - 1];
+
+        if (currentPrice > trailingStop) {
+          trailingStop = currentPrice * 0.95;
+        }
+
+        trailingStopLoss.push(trailingStop);
+
+        const pricePoints = prices.slice(0, currentFrame + 1).map((price, index) => `${index * 20},${100 - price * 1.2}`).join(' ');
+        const stopPoints = trailingStopLoss.map((stop, index) => `${index * 20},${100 - stop * 1.2}`).join(' ');
+
+        priceLine.setAttribute('points', pricePoints);
+        trailingStopLine.setAttribute('points', stopPoints);
+
+        currentFrame++;
+      }
+
+      requestAnimationFrame(updateAnimation);
+    };
+
+    onMounted(() => {
+      updateAnimation();
     });
 
     const openModal = () => {
