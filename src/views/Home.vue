@@ -321,39 +321,7 @@ export default {
       success: null,
     });
 
-    const prices = [30, 35, 32, 38, 45, 42, 50, 55, 52, 60, 65, 62, 70, 75, 72, 80, 85, 82, 90, 95];
-    const trailingStopLoss = [30];
-    let currentFrame = 0;
 
-    const updateAnimation = () => {
-      const priceLine = document.getElementById('priceLine');
-      const trailingStopLine = document.getElementById('trailingStopLine');
-
-      if (currentFrame < prices.length) {
-        const currentPrice = prices[currentFrame];
-        let trailingStop = trailingStopLoss[trailingStopLoss.length - 1];
-
-        if (currentPrice > trailingStop) {
-          trailingStop = currentPrice * 0.95;
-        }
-
-        trailingStopLoss.push(trailingStop);
-
-        const pricePoints = prices.slice(0, currentFrame + 1).map((price, index) => `${index * 20},${100 - price * 1.2}`).join(' ');
-        const stopPoints = trailingStopLoss.map((stop, index) => `${index * 20},${100 - stop * 1.2}`).join(' ');
-
-        priceLine.setAttribute('points', pricePoints);
-        trailingStopLine.setAttribute('points', stopPoints);
-
-        currentFrame++;
-      }
-
-      requestAnimationFrame(updateAnimation);
-    };
-
-    onMounted(() => {
-      updateAnimation();
-    });
 
     const openModal = () => {
       // Reset previous states
