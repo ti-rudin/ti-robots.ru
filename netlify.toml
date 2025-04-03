@@ -11,3 +11,8 @@
     Access-Control-Allow-Headers = "Accept"
     # Добавляем Content-Security-Policy
     Content-Security-Policy = "script-src 'self' 'unsafe-inline' mc.yandex.ru yastatic.net;"
+    Content-Security-Policy= "script-src 'nonce-erere34r3fdca3df4f';"
+    Content-Security-Policy = " img-src https://mc.yandex.ru;"
+    Content-Security-Policy=" child-src blob: https://mc.yandex.ru;"
+    Content-Security-Policy=" frame-src blob: https://mc.yandex.ru;"
+    Content-Security-Policy=" frame-ancestors blob: https://mc.yandex.ru;"
