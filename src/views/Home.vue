@@ -26,9 +26,10 @@
                 ? 'Исходный код доступен бесплатно на GitHub под лицензией MIT.' 
                 : 'Source code is available for free on GitHub under MIT license.' }}
             </p>
-            <a href="https://github.com/ti-rudin/binance-tsl-bot" target="_blank"
+            <a href="https://github.com/ti-rudin/binance-tsl-bot" onclick="ym(65948110,'reachGoal','togithub')" target="_blank"
               class="inline-block bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">
               {{ currentLanguage === 'ru' ? 'Скачать' : 'Download' }}
+              
             </a>
           </div>
           <div class="bg-green-100 dark:bg-green-900 rounded-lg p-6 text-center md:text-left">
@@ -492,6 +493,7 @@ export default {
     });
 
     const openModal = () => {
+      ym(65948110,'reachGoal','openmodal');
       formData.name = '';
       formData.contact = '';
       formStatus.loading = false;
