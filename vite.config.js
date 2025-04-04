@@ -17,7 +17,9 @@ export default defineConfig({
     strictPort: true,
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
-      'Cross-Origin-Embedder-Policy': 'require-corp'
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+      'Content-Security-Policy' : "script-src 'self' 'unsafe-inline' mc.yandex.ru yastatic.net 'nonce-erere34r3fdca3df4f'; img-src https://mc.yandex.ru; child-src blob: https://mc.yandex.ru; frame-src blob: https://mc.yandex.ru; frame-ancestors blob: https://mc.yandex.ru;"
+
     },
     proxy: {
       '/binance': {
