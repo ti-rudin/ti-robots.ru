@@ -11,7 +11,7 @@
           <p class="text-lg text-gray-600 dark:text-gray-400">
             {{ currentLanguage === 'ru' 
               ? 'Автоматизированный ассистент трейдера Binance' 
-              : 'Automated trading assistant for Trailing Stop Loss on Binance' }}
+              : 'Automated trading assistant for Trailing Stop Loss on Binance ' }}
           </p>
         </div>
 
