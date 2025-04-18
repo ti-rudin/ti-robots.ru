@@ -99,6 +99,17 @@
                 {{ currentLanguage === 'ru' ? 'Поддержка в Telegram' : 'Telegram Support' }}
               </a>
             </li>
+            <li>
+              <router-link 
+                to="/issues" 
+                class="pl-3 py-2 lg:p-0 block text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200"
+                :class="{ 
+                  'font-semibold text-blue-800 dark:text-blue-300': route.path === '/issues'
+                }"
+                @click="handleMobileLinkClick">
+                {{ currentLanguage === 'ru' ? 'Борт журнал' : 'Board magazine' }}
+              </router-link>
+            </li>
           </ul>
         </div>
       </div>

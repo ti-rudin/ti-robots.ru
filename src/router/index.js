@@ -9,6 +9,14 @@ const routes = [
     name: 'home',
     component: () => import('../views/Home.vue'),
   },
+  {
+    path: '/issues',
+    name: 'issues',
+    component: () => import('../views/IssuesView.vue'),
+    meta: {
+      title: 'GitHub Issues'
+    }
+  },
 ]
 
 const router = createRouter({
