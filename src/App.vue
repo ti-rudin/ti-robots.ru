@@ -1,14 +1,9 @@
 <template>
-  <div v-if="isLoading" class="flex items-center justify-center min-h-screen">
-    <div class="text-lg">{{ currentLanguage === 'ru' ? 'Загрузка...' : 'Loading...' }}</div>
-  </div>
-  <div v-else class="min-h-screen flex flex-col">
-    <!-- Header -->
+  <div>
     <nav class="bg-white dark:bg-gray-800 shadow">
-      <div class="flex flex-wrap justify-between items-center px-4 lg:px-6 py-2.5">
-        <!-- Logo -->
-        <div class="flex items-center">
-          <router-link to="/" class="flex items-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+          <div class="flex items-center space-x-4">
             <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-3">
               <g clip-path="url(#clip0)">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -21,279 +16,151 @@
                 </clipPath>
               </defs>
             </svg>
-          </router-link>
-        </div>
-
-        <!-- Navigation Menu -->
-        <div class="flex items-center lg:order-2">
-          <!-- Language Switcher -->
-          <div class="relative mr-2">
-            <button 
-              @click.stop="toggleLanguageDropdown"
-              class="flex items-center space-x-1 px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-            >
-              <span>{{ currentLanguage === 'ru' ? 'РУС' : 'ENG' }}</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            <div 
-              v-if="showLanguageDropdown"
-              class="absolute right-0 mt-1 w-24 bg-white dark:bg-gray-700 rounded-md shadow-lg z-50 border border-gray-200 dark:border-gray-600"
-            >
-              <button 
-                @click.stop="switchLanguage('ru')"
-                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                :class="{'bg-blue-100 dark:bg-blue-900': currentLanguage === 'ru'}"
-              >
-                Русский
-              </button>
-              <button 
-                @click.stop="switchLanguage('en')"
-                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
-                :class="{'bg-blue-100 dark:bg-blue-900': currentLanguage === 'en'}"
-              >
-                English
-              </button>
+            <div class="hidden md:flex space-x-2">
+              <router-link to="/" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
+                {{ translations.home[currentLanguage] }}
+              </router-link>
+              <router-link to="/services" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
+                {{ translations.services[currentLanguage] }}
+              </router-link>
+              <router-link to="/cases" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
+                {{ translations.cases[currentLanguage] }}
+              </router-link>
+              <router-link to="/about" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
+                {{ translations.about[currentLanguage] }}
+              </router-link>
+              <router-link to="/blog" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
+                {{ translations.blog[currentLanguage] }}
+              </router-link>
+              <router-link to="/contacts" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
+                {{ translations.contacts[currentLanguage] }}
+              </router-link>
             </div>
           </div>
-          
-          <!-- Theme Switch -->
-          <button @click="toggleTheme"
-            class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-2">
-            <svg v-if="isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.07 6.07l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 5a7 7 0 000 14 7 7 0 000-14z" />
-            </svg>
-            <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-            </svg>
-          </button>
+          <div class="flex items-center space-x-4">
+            <!-- Theme toggle -->
+            <button @click="toggleTheme" aria-label="Toggle Dark Mode" class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+              <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.07 6.07l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 5a7 7 0 000 14 7 7 0 000-14z" />
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-800 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+              </svg>
+            </button>
 
-          <!-- Mobile menu button -->
-          <button @click="isMobileMenuOpen = !isMobileMenuOpen"
-            class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"></path>
-            </svg>
-          </button>
-        </div>
+            <!-- Language switcher -->
+            <button @click="toggleLanguage" aria-label="Toggle Language" class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold">
+              {{ currentLanguage === 'ru' ? 'RU' : 'EN' }}
+            </button>
 
-        <!-- Main Navigation -->
-        <div :class="{ 'hidden': !isMobileMenuOpen }"
-          class="justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu">
-          <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-            <li>
-              <router-link to="/" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
-                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/' }" @click="handleMobileLinkClick">
-                {{ currentLanguage === 'ru' ? 'Главная' : 'Home' }}
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/services" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
-                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/services' }" @click="handleMobileLinkClick">
-                {{ currentLanguage === 'ru' ? 'Услуги' : 'Services' }}
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/industry-solutions" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
-                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/industry-solutions' }" @click="handleMobileLinkClick">
-                {{ currentLanguage === 'ru' ? 'Решения для отраслей' : 'Industry Solutions' }}
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/cases" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
-                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/cases' }" @click="handleMobileLinkClick">
-                {{ currentLanguage === 'ru' ? 'Кейсы' : 'Cases' }}
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/about" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
-                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/about' }" @click="handleMobileLinkClick">
-                {{ currentLanguage === 'ru' ? 'О компании' : 'About' }}
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/blog" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
-                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/blog' }" @click="handleMobileLinkClick">
-                {{ currentLanguage === 'ru' ? 'Блог' : 'Blog' }}
-              </router-link>
-            </li>
-            <li>
-              <router-link to="/contacts" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
-                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/contacts' }" @click="handleMobileLinkClick">
-                {{ currentLanguage === 'ru' ? 'Контакты' : 'Contacts' }}
-              </router-link>
-            </li>
-          </ul>
+            <!-- Mobile menu button -->
+            <button @click="toggleMobileMenu" aria-label="Toggle Menu" class="md:hidden p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
+              <svg v-if="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
+      </div>
+      <!-- Mobile menu -->
+      <div v-if="mobileMenuOpen" class="md:hidden bg-white dark:bg-gray-800 px-4 pt-2 pb-3 space-y-1">
+        <router-link @click="closeMobileMenu" to="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+          {{ translations.home[currentLanguage] }}
+        </router-link>
+        <router-link @click="closeMobileMenu" to="/services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+          {{ translations.services[currentLanguage] }}
+        </router-link>
+        <router-link @click="closeMobileMenu" to="/cases" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+          {{ translations.cases[currentLanguage] }}
+        </router-link>
+        <router-link @click="closeMobileMenu" to="/about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+          {{ translations.about[currentLanguage] }}
+        </router-link>
+        <router-link @click="closeMobileMenu" to="/blog" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+          {{ translations.blog[currentLanguage] }}
+        </router-link>
+        <router-link @click="closeMobileMenu" to="/contacts" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+          {{ translations.contacts[currentLanguage] }}
+        </router-link>
       </div>
     </nav>
-
-    <!-- Main Content -->
-    <main class="flex-grow bg-gray-50 dark:bg-gray-900">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component" />
-          </transition>
-        </router-view>
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-gray-800 shadow">
-      <div class="w-full mx-auto max-w-screen-xl p-4 text-center">
-        <span class="text-sm text-gray-500 dark:text-gray-400">
-          © {{ new Date().getFullYear() }} 
-          <router-link to="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
-            {{ currentLanguage === 'ru' ? 'Ваша компания' : 'Your Company' }}
-          </router-link>
-        </span>
-      </div>
-    </footer>
+    <router-view />
   </div>
-
-  <!-- Click Outside Handler -->
-  <div v-if="isMobileMenuOpen || showLanguageDropdown" class="fixed inset-0 z-10" @click="handleOutsideClick"></div>
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted, provide } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { ref, watch, onMounted } from 'vue';
+import { currentLanguage, toggleLanguage } from './stores/language';
 
 export default {
+  name: 'App',
   setup() {
-    const router = useRouter()
-    const route = useRoute()
+    const isDark = ref(false);
+    const mobileMenuOpen = ref(false);
 
-    const isLoading = ref(false)
-    const isDarkMode = ref(false)
-    const isMobileMenuOpen = ref(false)
-    const currentLanguage = ref(localStorage.getItem('preferredLanguage') || 'ru')
-    const showLanguageDropdown = ref(false)
+    const translations = {
+      home: { ru: 'Главная', en: 'Home' },
+      services: { ru: 'Услуги', en: 'Services' },
+      cases: { ru: 'Кейсы', en: 'Cases' },
+      about: { ru: 'О компании', en: 'About' },
+      blog: { ru: 'Блог', en: 'Blog' },
+      contacts: { ru: 'Контакты', en: 'Contacts' },
+    };
 
+    // Load theme from localStorage or system preference
     onMounted(() => {
-      // Initialize dark mode from localStorage
-      isDarkMode.value = localStorage.getItem('darkMode') === 'true'
-      applyTheme(isDarkMode.value)
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        isDark.value = savedTheme === 'dark';
+      } else {
+        isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      updateTheme();
+    });
 
-      // Add escape key listener
-      document.addEventListener('keydown', handleEscKey)
-    })
+    // Watch and update theme class on html element
+    watch(isDark, (newVal) => {
+      updateTheme();
+      localStorage.setItem('theme', newVal ? 'dark' : 'light');
+    });
 
-    onUnmounted(() => {
-      document.removeEventListener('keydown', handleEscKey)
-    })
-
-    const handleEscKey = (e) => {
-      if (e.key === 'Escape') {
-        closeMenus()
+    function updateTheme() {
+      if (isDark.value) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
       }
     }
 
-    const toggleLanguageDropdown = () => {
-      showLanguageDropdown.value = !showLanguageDropdown.value
+    function toggleTheme() {
+      isDark.value = !isDark.value;
     }
 
-    const switchLanguage = (lang) => {
-      currentLanguage.value = lang
-      localStorage.setItem('preferredLanguage', lang)
-      showLanguageDropdown.value = false
+    function toggleMobileMenu() {
+      mobileMenuOpen.value = !mobileMenuOpen.value;
     }
 
-    const closeMenus = () => {
-      isMobileMenuOpen.value = false
-      showLanguageDropdown.value = false
+    function closeMobileMenu() {
+      mobileMenuOpen.value = false;
     }
-
-    const toggleTheme = () => {
-      isDarkMode.value = !isDarkMode.value
-      localStorage.setItem('darkMode', isDarkMode.value)
-      applyTheme(isDarkMode.value)
-    }
-
-    const applyTheme = (isDark) => {
-      document.documentElement.classList.toggle('dark', isDark)
-    }
-
-    const handleOutsideClick = (e) => {
-      // Don't close menu if click was inside mobile menu
-      const mobileMenu = document.getElementById('mobile-menu')
-      if (mobileMenu && mobileMenu.contains(e.target)) {
-        return
-      }
-
-      // Don't close menu if click was on language switcher
-      const languageSwitcher = document.querySelector('.relative.mr-2')
-      if (languageSwitcher && languageSwitcher.contains(e.target)) {
-        return
-      }
-
-      closeMenus()
-    }
-
-    const handleMobileLinkClick = () => {
-      // Close menu after small delay to allow navigation to complete
-      setTimeout(() => {
-        isMobileMenuOpen.value = false
-      }, 100)
-    }
-
-    // Provide currentLanguage to all child components
-    provide('currentLanguage', currentLanguage)
 
     return {
-      isLoading,
-      isDarkMode,
-      isMobileMenuOpen,
+      isDark,
       currentLanguage,
-      showLanguageDropdown,
-      route,
-      toggleLanguageDropdown,
-      switchLanguage,
-      closeMenus,
+      mobileMenuOpen,
       toggleTheme,
-      handleOutsideClick,
-      handleMobileLinkClick
-    }
-  }
-}
+      toggleLanguage,
+      toggleMobileMenu,
+      closeMobileMenu,
+      translations,
+    };
+  },
+};
 </script>
 
 <style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 150ms ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Dark mode styles */
-:root {
-  --primary-color: #3b82f6;
-  --text-color: rgba(0, 0, 0, 0.85);
-  --bg-color: #fff;
-}
-
-:root.dark {
-  --primary-color: #60a5fa;
-  --text-color: rgba(255, 255, 255, 0.85);
-  --bg-color: #1f2937;
-}
-
-body {
-  color: var(--text-color);
-  background-color: var(--bg-color);
-}
-
-/* Ensure mobile menu stays above overlay */
-#mobile-menu {
-  position: relative;
-  z-index: 20;
-}
+/* Add any global styles if needed */
 </style>
