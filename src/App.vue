@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col min-h-screen">
     <nav class="bg-white dark:bg-gray-800 shadow">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
@@ -16,7 +16,11 @@
                 </clipPath>
               </defs>
             </svg>
-            <div class="hidden md:flex space-x-2">
+          </div>
+          
+          <!-- Центрированное меню -->
+          <div class="hidden md:flex flex-1 justify-center">
+            <div class="flex space-x-2">
               <router-link to="/" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
                 {{ translations.home[currentLanguage] }}
               </router-link>
@@ -37,6 +41,7 @@
               </router-link>
             </div>
           </div>
+
           <div class="flex items-center space-x-4">
             <!-- Theme toggle -->
             <button @click="toggleTheme" aria-label="Toggle Dark Mode" class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
@@ -87,7 +92,21 @@
         </router-link>
       </div>
     </nav>
-    <router-view />
+    
+    <main class="flex-grow">
+      <router-view />
+    </main>
+    
+    <footer class="bg-white dark:bg-gray-800 shadow mt-auto">
+      <div class="w-full mx-auto max-w-screen-xl p-4 text-center">
+        <span class="text-sm text-gray-500 dark:text-gray-400">
+          © {{ new Date().getFullYear() }}
+          <router-link to="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+            {{ currentLanguage === 'ru' ? 'Ваша компания' : 'Your Company' }}
+          </router-link>
+        </span>
+      </div>
+    </footer>
   </div>
 </template>
 
