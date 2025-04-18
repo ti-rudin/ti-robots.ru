@@ -9,6 +9,41 @@ const routes = [
     name: 'home',
     component: () => import('../views/Home.vue'),
   },
+  {
+    path: '/services',
+    name: 'services',
+    component: () => import('../views/Services.vue'),
+  },
+  {
+    path: '/industry-solutions',
+    name: 'industry-solutions',
+    component: () => import('../views/IndustrySolutions.vue'),
+  },
+  {
+    path: '/cases',
+    name: 'cases',
+    component: () => import('../views/Cases.vue'),
+  },
+  {
+    path: '/case-binance-tsl',
+    name: 'case-binance-tsl',
+    component: () => import('../views/CaseBinanceTSL.vue'),
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import('../views/About.vue'),
+  },
+  {
+    path: '/blog',
+    name: 'blog',
+    component: () => import('../views/Blog.vue'),
+  },
+  {
+    path: '/contacts',
+    name: 'contacts',
+    component: () => import('../views/Contacts.vue'),
+  },
 ]
 
 const router = createRouter({

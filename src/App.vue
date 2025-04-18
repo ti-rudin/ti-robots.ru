@@ -4,8 +4,8 @@
   </div>
   <div v-else class="min-h-screen flex flex-col">
     <!-- Header -->
-    <nav class="bg-gray-800 border-gray-200 px-4 lg:px-6 py-2.5">
-      <div class="flex flex-wrap justify-between items-center">
+    <nav class="bg-white dark:bg-gray-800 shadow">
+      <div class="flex flex-wrap justify-between items-center px-4 lg:px-6 py-2.5">
         <!-- Logo -->
         <div class="flex items-center">
           <router-link to="/" class="flex items-center">
@@ -61,11 +61,14 @@
           <!-- Theme Switch -->
           <button @click="toggleTheme"
             class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 mr-2">
-            <span v-if="isDarkMode">☀️</span>
-            <span v-else>🌙</span>
+            <svg v-if="isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.07 6.07l-.7-.7M6.34 6.34l-.7-.7m12.02 12.02l-.7-.7M6.34 17.66l-.7-.7M12 5a7 7 0 000 14 7 7 0 000-14z" />
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+            </svg>
           </button>
 
-    
           <!-- Mobile menu button -->
           <button @click="isMobileMenuOpen = !isMobileMenuOpen"
             class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -82,22 +85,46 @@
           class="justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu">
           <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
             <li>
-              <router-link to="/" class="ml-18 block py-2 pr-4 pl-3 text-gray-300 hover:text-white lg:p-0"
-                :class="{ 'text-white': route.path === '/' }" @click="handleMobileLinkClick">
-                TSL Bot
+              <router-link to="/" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
+                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/' }" @click="handleMobileLinkClick">
+                {{ currentLanguage === 'ru' ? 'Главная' : 'Home' }}
               </router-link>
             </li>
             <li>
-              <a class="pl-3 py-2 lg:p-0 block text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200"
-                href="https://github.com/ti-rudin/binance-tsl-bot" target="_blank">
-                {{ currentLanguage === 'ru' ? 'Репозиторий GitHub' : 'GitHub Repo' }}
-              </a>
+              <router-link to="/services" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
+                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/services' }" @click="handleMobileLinkClick">
+                {{ currentLanguage === 'ru' ? 'Услуги' : 'Services' }}
+              </router-link>
             </li>
             <li>
-              <a href="https://t.me/ti_robots_lab" target="_blank"
-                class="pl-3 py-2 lg:p-0 block text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
-                {{ currentLanguage === 'ru' ? 'Поддержка в Telegram' : 'Telegram Support' }}
-              </a>
+              <router-link to="/industry-solutions" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
+                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/industry-solutions' }" @click="handleMobileLinkClick">
+                {{ currentLanguage === 'ru' ? 'Решения для отраслей' : 'Industry Solutions' }}
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/cases" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
+                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/cases' }" @click="handleMobileLinkClick">
+                {{ currentLanguage === 'ru' ? 'Кейсы' : 'Cases' }}
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/about" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
+                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/about' }" @click="handleMobileLinkClick">
+                {{ currentLanguage === 'ru' ? 'О компании' : 'About' }}
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/blog" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
+                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/blog' }" @click="handleMobileLinkClick">
+                {{ currentLanguage === 'ru' ? 'Блог' : 'Blog' }}
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/contacts" class="block py-2 pr-4 pl-3 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 lg:p-0"
+                :class="{ 'text-blue-600 dark:text-blue-400': route.path === '/contacts' }" @click="handleMobileLinkClick">
+                {{ currentLanguage === 'ru' ? 'Контакты' : 'Contacts' }}
+              </router-link>
             </li>
           </ul>
         </div>
@@ -106,7 +133,7 @@
 
     <!-- Main Content -->
     <main class="flex-grow bg-gray-50 dark:bg-gray-900">
-      <div class="container mx-auto">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
             <component :is="Component" />
@@ -119,44 +146,35 @@
     <footer class="bg-white dark:bg-gray-800 shadow">
       <div class="w-full mx-auto max-w-screen-xl p-4 text-center">
         <span class="text-sm text-gray-500 dark:text-gray-400">
-          Ti-ROBOTS TSL © {{ new Date().getFullYear() }} <a href="https://t.me/ti_robots_lab" target="_blank"
-            class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
-            {{ currentLanguage === 'ru' ? 'Поддержка в Telegram' : 'Telegram Support' }}
-          </a>
+          © {{ new Date().getFullYear() }} 
+          <router-link to="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
+            {{ currentLanguage === 'ru' ? 'Ваша компания' : 'Your Company' }}
+          </router-link>
         </span>
       </div>
     </footer>
   </div>
 
   <!-- Click Outside Handler -->
-  <div v-if="isUserMenuOpen || isMobileMenuOpen || showLanguageDropdown" class="fixed inset-0 z-10" @click="handleOutsideClick"></div>
+  <div v-if="isMobileMenuOpen || showLanguageDropdown" class="fixed inset-0 z-10" @click="handleOutsideClick"></div>
 </template>
 
 <script>
 import { ref, computed, onMounted, onUnmounted, provide } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useAuthStore } from './stores/auth'
 
 export default {
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const authStore = useAuthStore()
 
-    const isLoading = ref(true)
+    const isLoading = ref(false)
     const isDarkMode = ref(false)
-    const isUserMenuOpen = ref(false)
     const isMobileMenuOpen = ref(false)
     const currentLanguage = ref(localStorage.getItem('preferredLanguage') || 'ru')
     const showLanguageDropdown = ref(false)
 
-    const isAuthenticated = computed(() => authStore.isAuthenticated)
-    const userEmail = computed(() => authStore.userEmail)
-
-    onMounted(async () => {
-      await authStore.init()
-      isLoading.value = false
-
+    onMounted(() => {
       // Initialize dark mode from localStorage
       isDarkMode.value = localStorage.getItem('darkMode') === 'true'
       applyTheme(isDarkMode.value)
@@ -186,19 +204,8 @@ export default {
     }
 
     const closeMenus = () => {
-      isUserMenuOpen.value = false
       isMobileMenuOpen.value = false
       showLanguageDropdown.value = false
-    }
-
-    const handleLogout = async () => {
-      try {
-        await authStore.logout()
-        closeMenus()
-        router.push('/login')
-      } catch (error) {
-        console.error('Logout error:', error)
-      }
     }
 
     const toggleTheme = () => {
@@ -215,12 +222,6 @@ export default {
       // Don't close menu if click was inside mobile menu
       const mobileMenu = document.getElementById('mobile-menu')
       if (mobileMenu && mobileMenu.contains(e.target)) {
-        return
-      }
-
-      // Don't close menu if click was on user menu button
-      const userMenuButton = document.querySelector('.relative button')
-      if (userMenuButton && userMenuButton.contains(e.target)) {
         return
       }
 
@@ -246,17 +247,13 @@ export default {
     return {
       isLoading,
       isDarkMode,
-      isUserMenuOpen,
       isMobileMenuOpen,
       currentLanguage,
       showLanguageDropdown,
-      isAuthenticated,
-      userEmail,
       route,
       toggleLanguageDropdown,
       switchLanguage,
       closeMenus,
-      handleLogout,
       toggleTheme,
       handleOutsideClick,
       handleMobileLinkClick
@@ -278,15 +275,15 @@ export default {
 
 /* Dark mode styles */
 :root {
-  --primary-color: #f0b90b;
+  --primary-color: #3b82f6;
   --text-color: rgba(0, 0, 0, 0.85);
   --bg-color: #fff;
 }
 
 :root.dark {
-  --primary-color: #f0b90b;
+  --primary-color: #60a5fa;
   --text-color: rgba(255, 255, 255, 0.85);
-  --bg-color: #141414;
+  --bg-color: #1f2937;
 }
 
 body {
