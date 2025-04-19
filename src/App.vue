@@ -93,17 +93,21 @@
       </div>
     </nav>
     
-    <main class="flex-grow">
-      <router-view />
+    <main class="flex-grow bg-gray-50 dark:bg-gray-900">
+      <div class="container mx-auto">
+        <router-view >
+       
+        </router-view>
+      </div>
     </main>
     
-    <footer class="bg-white dark:bg-gray-800 shadow mt-auto">
+    <footer class="bg-white dark:bg-gray-800 shadow">
       <div class="w-full mx-auto max-w-screen-xl p-4 text-center">
         <span class="text-sm text-gray-500 dark:text-gray-400">
-          © {{ new Date().getFullYear() }}
-          <router-link to="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
-            {{ currentLanguage === 'ru' ? 'Ваша компания' : 'Your Company' }}
-          </router-link>
+          Ti-ROBOTS © {{ new Date().getFullYear() }} <a href="https://t.me/ti_robots_lab" target="_blank"
+            class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
+            Поддержка в Telegram
+          </a>
         </span>
       </div>
     </footer>
@@ -181,5 +185,28 @@ export default {
 </script>
 
 <style>
-/* Add any global styles if needed */
+
+/* Dark mode styles */
+:root {
+  --primary-color: #f0b90b;
+  --text-color: rgba(0, 0, 0, 0.85);
+  --bg-color: #fff;
+}
+
+:root.dark {
+  --primary-color: #f0b90b;
+  --text-color: rgba(255, 255, 255, 0.85);
+  --bg-color: #141414;
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+/* Ensure mobile menu stays above overlay */
+#mobile-menu {
+  position: relative;
+  z-index: 20;
+}
 </style>
