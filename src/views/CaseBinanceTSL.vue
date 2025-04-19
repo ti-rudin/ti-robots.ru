@@ -1,316 +1,20 @@
 <template>
-  <div class="max-w-4xl mx-auto p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
-    <!-- Header -->
-    <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold dark:text-white mb-2">
-        {{ translations.title[currentLanguage] }}
-      </h1>
-      <p class="text-lg text-gray-600 dark:text-gray-400">
-        {{ currentLanguage === 'ru' 
-          ? 'Автоматизированный ассистент трейдера для Trailing Stop Loss на Binance' 
-          : 'Automated trading assistant for Trailing Stop Loss on Binance' }}
-      </p>
-    </div>
-
-    <!-- Call to Action Cards -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-      <div class="bg-blue-100 dark:bg-blue-900 rounded-lg p-6 text-center md:text-left">
-        <h3 class="text-xl font-bold dark:text-white mb-2">
-          {{ translations.githubTitle[currentLanguage] }}
-        </h3>
-        <p class="text-gray-700 dark:text-gray-300 mb-4">
-          {{ translations.githubDescription[currentLanguage] }}
+  <div>
+    <div class="max-w-4xl mx-auto p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold dark:text-white mb-2">
+          {{ translations.title[currentLanguage] }}
+        </h1>
+        <p class="text-lg text-gray-600 dark:text-gray-400">
+          {{ currentLanguage === 'ru' 
+            ? 'Автоматизированный ассистент трейдера для Trailing Stop Loss на Binance' 
+            : 'Automated trading assistant for Trailing Stop Loss on Binance' }}
         </p>
-        <a href="https://github.com/ti-rudin/binance-tsl-bot" onclick="ym(65948110,'reachGoal','togithub')" target="_blank"
-          class="inline-block bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">
-          {{ translations.download[currentLanguage] }}
-        </a>
       </div>
-      <div class="bg-green-100 dark:bg-green-900 rounded-lg p-6 text-center md:text-left">
-        <h3 class="text-xl font-bold dark:text-white mb-2">
-          {{ translations.deploymentTitle[currentLanguage] }}
-        </h3>
-        <p class="text-gray-700 dark:text-gray-300 mb-4">
-          {{ translations.deploymentDescription[currentLanguage] }}
-        </p>
-        <button class="inline-block bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700 transition-colors duration-200"
-          @click="openModal">
-          {{ translations.orderSetup[currentLanguage] }}
-        </button>
-      </div>
-    </section>
 
-    <!-- Main Content -->
-    <section class="space-y-8 text-gray-700 dark:text-gray-300">
-      <!-- Animation Section -->
-      <section>
-        <div class="flex justify-center">
-          <img src="/stoploss.gif" alt="Trailing Stop Loss Animation" width="auto" />
-        </div>
-      </section>
-
-      <!-- Description -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.descriptionTitle[currentLanguage] }}
-        </h2>
-        <p class="leading-relaxed">
-          <strong>{{ translations.botName[currentLanguage] }}</strong> 
-          {{ translations.description[currentLanguage] }}
-        </p>
-      </section>
-
-      <!-- Key Features -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.keyFeaturesTitle[currentLanguage] }}
-        </h2>
-        <ul class="list-disc list-inside space-y-2">
-          <li>{{ translations.feature1[currentLanguage] }}</li>
-          <li>{{ translations.feature2[currentLanguage] }}</li>
-          <li>{{ translations.feature3[currentLanguage] }}</li>
-          <li>{{ translations.feature4[currentLanguage] }}</li>
-          <li>{{ translations.feature5[currentLanguage] }}</li>
-        </ul>
-      </section>
-
-      <!-- Architecture -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.architectureTitle[currentLanguage] }}
-        </h2>
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-          {{ translations.componentsTitle[currentLanguage] }}
-        </h3>
-        <p class="mb-4">
-          {{ translations.dockerDescription[currentLanguage] }}
-        </p>
-        <ul class="list-disc list-inside space-y-2">
-          <li>
-            <strong>{{ translations.nodeRedTitle[currentLanguage] }}</strong>: 
-            {{ translations.nodeRedDescription[currentLanguage] }}
-          </li>
-          <li>
-            <strong>{{ translations.microservicesTitle[currentLanguage] }}</strong>:
-            <ul class="list-['-_'] list-inside ml-6 mt-2 space-y-1 text-gray-600 dark:text-gray-400">
-              <li>{{ translations.orderService[currentLanguage] }}</li>
-              <li>{{ translations.balanceService[currentLanguage] }}</li>
-              <li>{{ translations.priceService[currentLanguage] }}</li>
-              <li>{{ translations.telegramService[currentLanguage] }}</li>
-            </ul>
-          </li>
-          <li>
-            <strong>{{ translations.workersTitle[currentLanguage] }}</strong>: 
-            {{ translations.workersDescription[currentLanguage] }}
-          </li>
-          <li>
-            <strong>{{ translations.frontendTitle[currentLanguage] }}</strong>: 
-            {{ translations.frontendDescription[currentLanguage] }}
-          </li>
-          <li>
-            <strong>Redis</strong>: 
-            {{ translations.redisDescription[currentLanguage] }}
-          </li>
-        </ul>
-      </section>
-
-      <!-- Trading Strategy -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.tradingStrategyTitle[currentLanguage] }}
-        </h2>
-        <p class="leading-relaxed">
-          {{ translations.strategyDescription[currentLanguage] }}
-        </p>
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-4 mb-3">
-          {{ translations.strategyAdaptationTitle[currentLanguage] }}
-        </h3>
-        <ul class="list-disc list-inside space-y-2">
-          <li>{{ translations.adaptation1[currentLanguage] }}</li>
-          <li>{{ translations.adaptation2[currentLanguage] }}</li>
-          <li>{{ translations.adaptation3[currentLanguage] }}</li>
-        </ul>
-      </section>
-
-      <!-- Installation -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.installationTitle[currentLanguage] }}
-        </h2>
-        <div class="space-y-4">
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              {{ translations.requirementsTitle[currentLanguage] }}
-            </h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>{{ translations.serverRequirements[currentLanguage] }}</li>
-              <li>{{ translations.softwareRequirements[currentLanguage] }}</li>
-              <li>{{ translations.apiRequirements[currentLanguage] }}</li>
-              <li>{{ translations.telegramRequirements[currentLanguage] }}</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              {{ translations.instructionsTitle[currentLanguage] }}
-            </h3>
-            <pre class="bg-gray-100 dark:bg-gray-700 p-4 rounded-md overflow-x-auto text-sm"><code># 1. {{ translations.cloneCommand[currentLanguage] }}
-git clone https://github.com/ti-rudin/binance-tsl-bot.git
-cd binance-tsl-bot
-
-# 2. {{ translations.frontendCommand[currentLanguage] }}
-cd front/
-npm install
-cd ..
-
-# 3. {{ translations.nodeRedCommand[currentLanguage] }}
-cd node-red/
-npm install
-cd ..
-
-# 4. {{ translations.dockerCommand[currentLanguage] }}
-docker-compose up -d</code></pre>
-          </div>
-          <div>
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-              {{ translations.configurationTitle[currentLanguage] }}
-            </h3>
-            <p>
-              {{ translations.configurationDescription[currentLanguage] }}
-            </p>
-            <p>
-              {{ translations.nodeRedAccess[currentLanguage] }}<br>
-              <code class="text-sm bg-gray-200 dark:bg-gray-700 px-1 py-0.5 rounded text-red-600 dark:text-red-400">http://&lt;{{ translations.yourServerIP[currentLanguage] }}&gt;:1880/dashboard/settings</code>
-            </p>
-            <p>
-              {{ translations.ipNote[currentLanguage] }}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Frontend -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.frontendSectionTitle[currentLanguage] }}
-        </h2>
-        <p class="leading-relaxed mb-4">
-          {{ translations.frontendAccess[currentLanguage] }}<br>
-          <code class="text-sm bg-gray-200 dark:bg-gray-700 px-1 py-0.5 rounded text-red-600 dark:text-red-400">http://&lt;{{ translations.yourServerIP[currentLanguage] }}&gt;:3000</code>
-        </p>
-        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-          {{ translations.frontendFeaturesTitle[currentLanguage] }}
-        </h3>
-        <ul class="list-disc list-inside space-y-2">
-          <li>{{ translations.frontendFeature1[currentLanguage] }}</li>
-          <li>{{ translations.frontendFeature2[currentLanguage] }}</li>
-          <li>{{ translations.frontendFeature3[currentLanguage] }}</li>
-          <li>{{ translations.frontendFeature4[currentLanguage] }}</li>
-          <li>{{ translations.frontendFeature5[currentLanguage] }}</li>
-          <li>{{ translations.frontendFeature6[currentLanguage] }}</li>
-        </ul>
-      </section>
-
-      <!-- Reliability -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.reliabilityTitle[currentLanguage] }}
-        </h2>
-        <p class="leading-relaxed mb-4">
-          {{ translations.reliabilityDescription[currentLanguage] }}
-        </p>
-        <ul class="list-disc list-inside space-y-2">
-          <li>
-            <strong>{{ translations.redisSnapshots[currentLanguage] }}</strong>: 
-            {{ translations.redisSnapshotsDescription[currentLanguage] }}
-          </li>
-          <li>
-            <strong>{{ translations.restartRecovery[currentLanguage] }}</strong>: 
-            {{ translations.restartRecoveryDescription[currentLanguage] }}
-          </li>
-          <li>
-            <strong>{{ translations.locksTitle[currentLanguage] }}</strong>: 
-            {{ translations.locksDescription[currentLanguage] }}
-          </li>
-        </ul>
-      </section>
-
-      <!-- Differences -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.differencesTitle[currentLanguage] }}
-        </h2>
-        <p class="leading-relaxed">
-          {{ translations.differencesDescription1[currentLanguage] }}
-          <br>
-          {{ translations.differencesDescription2[currentLanguage] }}
-        </p>
-      </section>
-
-      <!-- License -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.licenseTitle[currentLanguage] }}
-        </h2>
-        <p>
-          {{ translations.licenseDescription[currentLanguage] }}
-          <a href="https://github.com/ti-rudin/binance-tsl-bot/blob/master/LICENSE" target="_blank" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline hover:underline transition-colors duration-200">
-            {{ translations.mitLicense[currentLanguage] }}
-          </a>.
-        </p>
-      </section>
-
-      <!-- Technologies -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.technologiesTitle[currentLanguage] }}
-        </h2>
-        <div class="flex flex-wrap gap-2">
-          <span class="px-3 py-1 text-sm font-semibold text-blue-800 dark:text-blue-200 bg-blue-100 dark:bg-blue-900 rounded-full">JavaScript (Node.js)</span>
-          <span class="px-3 py-1 text-sm font-semibold text-purple-800 dark:text-purple-200 bg-purple-100 dark:bg-purple-900 rounded-full">Vue.js</span>
-          <span class="px-3 py-1 text-sm font-semibold text-green-800 dark:text-green-200 bg-green-100 dark:bg-green-900 rounded-full">Docker</span>
-          <span class="px-3 py-1 text-sm font-semibold text-red-800 dark:text-red-200 bg-red-100 dark:bg-red-900 rounded-full">Redis</span>
-          <span class="px-3 py-1 text-sm font-semibold text-yellow-800 dark:text-yellow-200 bg-yellow-100 dark:bg-yellow-900 rounded-full">Node-RED</span>
-          <span class="px-3 py-1 text-sm font-semibold text-indigo-800 dark:text-indigo-200 bg-indigo-100 dark:bg-indigo-900 rounded-full">Binance API</span>
-          <span class="px-3 py-1 text-sm font-semibold text-teal-800 dark:text-teal-200 bg-teal-100 dark:bg-teal-900 rounded-full">Tailwind CSS</span>
-        </div>
-      </section>
-
-      <!-- Developer Info -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.developerInfoTitle[currentLanguage] }}
-        </h2>
-        <p class="mb-2">
-          {{ translations.collaborationInvitation[currentLanguage] }}
-        </p>
-        <p>
-          {{ translations.repository[currentLanguage] }} 
-          <a
-            class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200 break-all hover:underline"
-            href="https://github.com/ti-rudin/binance-tsl-bot"
-            target="_blank">https://github.com/ti-rudin/binance-tsl-bot</a>
-        </p>
-      </section>
-
-      <!-- Contacts -->
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {{ translations.contactsTitle[currentLanguage] }}
-        </h2>
-        <p>
-          {{ translations.telegramCommunity[currentLanguage] }}
-        </p>
-        <div class="mt-4 flex justify-center">
-          <a href="https://t.me/ti_robots_lab" target="_blank"
-            class="inline-flex bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.61c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.227-2.15 4.582 3.381c.839.497 1.45.227 1.662-.78l3.27-15.561c.299-1.308-.425-1.855-1.188-1.51z"></path></svg>
-            {{ translations.telegramLink[currentLanguage] }}
-          </a>
-        </div>
-      </section>
-
-      <!-- Bottom CTA Cards -->
-      <section class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8 border-t border-gray-200 dark:border-gray-700">
+      <!-- Call to Action Cards -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <div class="bg-blue-100 dark:bg-blue-900 rounded-lg p-6 text-center md:text-left">
           <h3 class="text-xl font-bold dark:text-white mb-2">
             {{ translations.githubTitle[currentLanguage] }}
@@ -318,7 +22,7 @@ docker-compose up -d</code></pre>
           <p class="text-gray-700 dark:text-gray-300 mb-4">
             {{ translations.githubDescription[currentLanguage] }}
           </p>
-          <a href="https://github.com/ti-rudin/binance-tsl-bot" target="_blank"
+          <a href="https://github.com/ti-rudin/binance-tsl-bot" onclick="ym(65948110,'reachGoal','togithub')" target="_blank"
             class="inline-block bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">
             {{ translations.download[currentLanguage] }}
           </a>
@@ -336,67 +40,366 @@ docker-compose up -d</code></pre>
           </button>
         </div>
       </section>
-    </section>
-  </div>
 
-  <!-- Modal -->
-  <transition name="modal-fade">
-    <div v-if="formModal" @click.self="closeModal"
-      class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 p-4 backdrop-blur-sm">
-      <transition name="modal-content-fade">
-        <div v-if="formModal" class="modal-content bg-white dark:bg-gray-800 rounded-lg p-6 shadow-xl w-full max-w-md transform transition-all duration-300 ease-out">
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-medium text-gray-900 dark:text-white">
-              {{ translations.modalTitle[currentLanguage] }}
+      <!-- Main Content -->
+      <section class="space-y-8 text-gray-700 dark:text-gray-300">
+        <!-- Animation Section -->
+        <section>
+          <div class="flex justify-center">
+            <img src="/stoploss.gif" alt="Trailing Stop Loss Animation" width="auto" />
+          </div>
+        </section>
+
+        <!-- Description -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.descriptionTitle[currentLanguage] }}
+          </h2>
+          <p class="leading-relaxed">
+            <strong>{{ translations.botName[currentLanguage] }}</strong> 
+            {{ translations.description[currentLanguage] }}
+          </p>
+        </section>
+
+        <!-- Key Features -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.keyFeaturesTitle[currentLanguage] }}
+          </h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li>{{ translations.feature1[currentLanguage] }}</li>
+            <li>{{ translations.feature2[currentLanguage] }}</li>
+            <li>{{ translations.feature3[currentLanguage] }}</li>
+            <li>{{ translations.feature4[currentLanguage] }}</li>
+            <li>{{ translations.feature5[currentLanguage] }}</li>
+          </ul>
+        </section>
+
+        <!-- Architecture -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.architectureTitle[currentLanguage] }}
+          </h2>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+            {{ translations.componentsTitle[currentLanguage] }}
+          </h3>
+          <p class="mb-4">
+            {{ translations.dockerDescription[currentLanguage] }}
+          </p>
+          <ul class="list-disc list-inside space-y-2">
+            <li>
+              <strong>{{ translations.nodeRedTitle[currentLanguage] }}</strong>: 
+              {{ translations.nodeRedDescription[currentLanguage] }}
+            </li>
+            <li>
+              <strong>{{ translations.microservicesTitle[currentLanguage] }}</strong>:
+              <ul class="list-['-_'] list-inside ml-6 mt-2 space-y-1 text-gray-600 dark:text-gray-400">
+                <li>{{ translations.orderService[currentLanguage] }}</li>
+                <li>{{ translations.balanceService[currentLanguage] }}</li>
+                <li>{{ translations.priceService[currentLanguage] }}</li>
+                <li>{{ translations.telegramService[currentLanguage] }}</li>
+              </ul>
+            </li>
+            <li>
+              <strong>{{ translations.workersTitle[currentLanguage] }}</strong>: 
+              {{ translations.workersDescription[currentLanguage] }}
+            </li>
+            <li>
+              <strong>{{ translations.frontendTitle[currentLanguage] }}</strong>: 
+              {{ translations.frontendDescription[currentLanguage] }}
+            </li>
+            <li>
+              <strong>Redis</strong>: 
+              {{ translations.redisDescription[currentLanguage] }}
+            </li>
+          </ul>
+        </section>
+
+        <!-- Trading Strategy -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.tradingStrategyTitle[currentLanguage] }}
+          </h2>
+          <p class="leading-relaxed">
+            {{ translations.strategyDescription[currentLanguage] }}
+          </p>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-4 mb-3">
+            {{ translations.strategyAdaptationTitle[currentLanguage] }}
+          </h3>
+          <ul class="list-disc list-inside space-y-2">
+            <li>{{ translations.adaptation1[currentLanguage] }}</li>
+            <li>{{ translations.adaptation2[currentLanguage] }}</li>
+            <li>{{ translations.adaptation3[currentLanguage] }}</li>
+          </ul>
+        </section>
+
+        <!-- Installation -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.installationTitle[currentLanguage] }}
+          </h2>
+          <div class="space-y-4">
+            <div>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                {{ translations.requirementsTitle[currentLanguage] }}
+              </h3>
+              <ul class="list-disc list-inside space-y-1">
+                <li>{{ translations.serverRequirements[currentLanguage] }}</li>
+                <li>{{ translations.softwareRequirements[currentLanguage] }}</li>
+                <li>{{ translations.apiRequirements[currentLanguage] }}</li>
+                <li>{{ translations.telegramRequirements[currentLanguage] }}</li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                {{ translations.instructionsTitle[currentLanguage] }}
+              </h3>
+              <pre class="bg-gray-100 dark:bg-gray-700 p-4 rounded-md overflow-x-auto text-sm"><code># 1. {{ translations.cloneCommand[currentLanguage] }}
+git clone https://github.com/ti-rudin/binance-tsl-bot.git
+cd binance-tsl-bot
+
+# 2. {{ translations.frontendCommand[currentLanguage] }}
+cd front/
+npm install
+cd ..
+
+# 3. {{ translations.nodeRedCommand[currentLanguage] }}
+cd node-red/
+npm install
+cd ..
+
+# 4. {{ translations.dockerCommand[currentLanguage] }}
+docker-compose up -d</code></pre>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                {{ translations.configurationTitle[currentLanguage] }}
+              </h3>
+              <p>
+                {{ translations.configurationDescription[currentLanguage] }}
+              </p>
+              <p>
+                {{ translations.nodeRedAccess[currentLanguage] }}<br>
+                <code class="text-sm bg-gray-200 dark:bg-gray-700 px-1 py-0.5 rounded text-red-600 dark:text-red-400">http://<{{ translations.yourServerIP[currentLanguage] }}>:1880/dashboard/settings</code>
+              </p>
+              <p>
+                {{ translations.ipNote[currentLanguage] }}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Frontend -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.frontendSectionTitle[currentLanguage] }}
+          </h2>
+          <p class="leading-relaxed mb-4">
+            {{ translations.frontendAccess[currentLanguage] }}<br>
+            <code class="text-sm bg-gray-200 dark:bg-gray-700 px-1 py-0.5 rounded text-red-600 dark:text-red-400">http://<{{ translations.yourServerIP[currentLanguage] }}>:3000</code>
+          </p>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+            {{ translations.frontendFeaturesTitle[currentLanguage] }}
+          </h3>
+          <ul class="list-disc list-inside space-y-2">
+            <li>{{ translations.frontendFeature1[currentLanguage] }}</li>
+            <li>{{ translations.frontendFeature2[currentLanguage] }}</li>
+            <li>{{ translations.frontendFeature3[currentLanguage] }}</li>
+            <li>{{ translations.frontendFeature4[currentLanguage] }}</li>
+            <li>{{ translations.frontendFeature5[currentLanguage] }}</li>
+            <li>{{ translations.frontendFeature6[currentLanguage] }}</li>
+          </ul>
+        </section>
+
+        <!-- Reliability -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.reliabilityTitle[currentLanguage] }}
+          </h2>
+          <p class="leading-relaxed mb-4">
+            {{ translations.reliabilityDescription[currentLanguage] }}
+          </p>
+          <ul class="list-disc list-inside space-y-2">
+            <li>
+              <strong>{{ translations.redisSnapshots[currentLanguage] }}</strong>: 
+              {{ translations.redisSnapshotsDescription[currentLanguage] }}
+            </li>
+            <li>
+              <strong>{{ translations.restartRecovery[currentLanguage] }}</strong>: 
+              {{ translations.restartRecoveryDescription[currentLanguage] }}
+            </li>
+            <li>
+              <strong>{{ translations.locksTitle[currentLanguage] }}</strong>: 
+              {{ translations.locksDescription[currentLanguage] }}
+            </li>
+          </ul>
+        </section>
+
+        <!-- Differences -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.differencesTitle[currentLanguage] }}
+          </h2>
+          <p class="leading-relaxed">
+            {{ translations.differencesDescription1[currentLanguage] }}
+            <br>
+            {{ translations.differencesDescription2[currentLanguage] }}
+          </p>
+        </section>
+
+        <!-- License -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.licenseTitle[currentLanguage] }}
+          </h2>
+          <p>
+            {{ translations.licenseDescription[currentLanguage] }}
+            <a href="https://github.com/ti-rudin/binance-tsl-bot/blob/master/LICENSE" target="_blank" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline hover:underline transition-colors duration-200">
+              {{ translations.mitLicense[currentLanguage] }}
+            </a>.
+          </p>
+        </section>
+
+        <!-- Technologies -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.technologiesTitle[currentLanguage] }}
+          </h2>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 text-sm font-semibold text-blue-800 dark:text-blue-200 bg-blue-100 dark:bg-blue-900 rounded-full">JavaScript (Node.js)</span>
+            <span class="px-3 py-1 text-sm font-semibold text-purple-800 dark:text-purple-200 bg-purple-100 dark:bg-purple-900 rounded-full">Vue.js</span>
+            <span class="px-3 py-1 text-sm font-semibold text-green-800 dark:text-green-200 bg-green-100 dark:bg-green-900 rounded-full">Docker</span>
+            <span class="px-3 py-1 text-sm font-semibold text-red-800 dark:text-red-200 bg-red-100 dark:bg-red-900 rounded-full">Redis</span>
+            <span class="px-3 py-1 text-sm font-semibold text-yellow-800 dark:text-yellow-200 bg-yellow-100 dark:bg-yellow-900 rounded-full">Node-RED</span>
+            <span class="px-3 py-1 text-sm font-semibold text-indigo-800 dark:text-indigo-200 bg-indigo-100 dark:bg-indigo-900 rounded-full">Binance API</span>
+            <span class="px-3 py-1 text-sm font-semibold text-teal-800 dark:text-teal-200 bg-teal-100 dark:bg-teal-900 rounded-full">Tailwind CSS</span>
+          </div>
+        </section>
+
+        <!-- Developer Info -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.developerInfoTitle[currentLanguage] }}
+          </h2>
+          <p class="mb-2">
+            {{ translations.collaborationInvitation[currentLanguage] }}
+          </p>
+          <p>
+            {{ translations.repository[currentLanguage] }} 
+            <a
+              class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200 break-all hover:underline"
+              href="https://github.com/ti-rudin/binance-tsl-bot"
+              target="_blank">https://github.com/ti-rudin/binance-tsl-bot</a>
+          </p>
+        </section>
+
+        <!-- Contacts -->
+        <section>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {{ translations.contactsTitle[currentLanguage] }}
+          </h2>
+          <p>
+            {{ translations.telegramCommunity[currentLanguage] }}
+          </p>
+          <div class="mt-4 flex justify-center">
+            <a href="https://t.me/ti_robots_lab" target="_blank"
+              class="inline-flex bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.61c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.227-2.15 4.582 3.381c.839.497 1.45.227 1.662-.78l3.27-15.561c.299-1.308-.425-1.855-1.188-1.51z"></path></svg>
+              {{ translations.telegramLink[currentLanguage] }}
+            </a>
+          </div>
+        </section>
+
+        <!-- Bottom CTA Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <div class="bg-blue-100 dark:bg-blue-900 rounded-lg p-6 text-center md:text-left">
+            <h3 class="text-xl font-bold dark:text-white mb-2">
+              {{ translations.githubTitle[currentLanguage] }}
             </h3>
-            <button @click="closeModal" aria-label="Close modal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors duration-200">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              {{ translations.githubDescription[currentLanguage] }}
+            </p>
+            <a href="https://github.com/ti-rudin/binance-tsl-bot" target="_blank"
+              class="inline-block bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">
+              {{ translations.download[currentLanguage] }}
+            </a>
+          </div>
+          <div class="bg-green-100 dark:bg-green-900 rounded-lg p-6 text-center md:text-left">
+            <h3 class="text-xl font-bold dark:text-white mb-2">
+              {{ translations.deploymentTitle[currentLanguage] }}
+            </h3>
+            <p class="text-gray-700 dark:text-gray-300 mb-4">
+              {{ translations.deploymentDescription[currentLanguage] }}
+            </p>
+            <button class="inline-block bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700 transition-colors duration-200"
+              @click="openModal">
+              {{ translations.orderSetup[currentLanguage] }}
             </button>
           </div>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-            {{ translations.modalDescription[currentLanguage] }}
-          </p>
-          <form class="flex flex-col space-y-4" @submit.prevent="submitForm">
-            <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {{ translations.nameLabel[currentLanguage] }}
-              </label>
-              <input type="text" v-model="formData.name" name="name" id="name" 
-                :placeholder="translations.namePlaceholder[currentLanguage]"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-600 dark:placeholder-gray-400" />
-            </div>
-            <div>
-              <label for="tel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {{ translations.contactLabel[currentLanguage] }} <span class="text-red-500">*</span>
-              </label>
-              <input type="text" v-model="formData.contact" name="tel" id="tel"
-                :placeholder="translations.contactPlaceholder[currentLanguage]" required
-                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-600 dark:placeholder-gray-400" />
-            </div>
-            <!-- Status Messages -->
-            <div class="h-6 text-sm text-center">
-              <p v-if="formStatus.loading" class="text-blue-600 dark:text-blue-400 animate-pulse">
-                {{ translations.sending[currentLanguage] }}
-              </p>
-              <p v-if="formStatus.error" class="text-red-600 dark:text-red-400">{{ formStatus.error }}</p>
-              <p v-if="formStatus.success" class="text-green-600 dark:text-green-400">{{ formStatus.success }}</p>
-            </div>
-            <button type="submit" :disabled="formStatus.loading || formStatus.success"
-              class="w-full bg-blue-600 text-white rounded-lg px-4 py-2 font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
-              {{ formStatus.loading 
-                ? translations.sending[currentLanguage] 
-                : (formStatus.success 
-                  ? translations.sent[currentLanguage] 
-                  : translations.submit[currentLanguage]) }}
-            </button>
-          </form>
-        </div>
-      </transition>
+        </section>
+      </section>
     </div>
-  </transition>
+
+    <!-- Modal Container -->
+    <transition name="modal-fade">
+      <div v-if="formModal" @click.self="closeModal"
+        class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 p-4 backdrop-blur-sm">
+        <!-- Add transition for the modal content -->
+        <transition name="modal-content-fade">
+          <div v-if="formModal" class="modal-content bg-white dark:bg-gray-800 rounded-lg p-6 shadow-xl w-full max-w-md transform transition-all duration-300 ease-out">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                {{ translations.modalTitle[currentLanguage] }}
+              </h3>
+              <button @click="closeModal" aria-label="Закрыть модальное окно" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors duration-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              {{ translations.modalDescription[currentLanguage] }}
+            </p>
+            <form class="flex flex-col space-y-4" @submit.prevent="submitForm">
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  {{ translations.nameLabel[currentLanguage] }}
+                </label>
+                <input type="text" v-model="formData.name" name="name" id="name" 
+                  :placeholder="translations.namePlaceholder[currentLanguage]"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-600 dark:placeholder-gray-400" />
+              </div>
+              <div>
+                <label for="tel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  {{ translations.contactLabel[currentLanguage] }} <span class="text-red-500">*</span>
+                </label>
+                <input type="text" v-model="formData.contact" name="tel" id="tel"
+                  :placeholder="translations.contactPlaceholder[currentLanguage]" required
+                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-600 dark:placeholder-gray-400" />
+              </div>
+              <!-- Status Messages -->
+              <div class="h-6 text-sm text-center">
+                <p v-if="formStatus.loading" class="text-blue-600 dark:text-blue-400 animate-pulse">
+                  {{ translations.sending[currentLanguage] }}
+                </p>
+                <p v-if="formStatus.error" class="text-red-600 dark:text-red-400">{{ formStatus.error }}</p>
+                <p v-if="formStatus.success" class="text-green-600 dark:text-green-400">{{ formStatus.success }}</p>
+              </div>
+              <button type="submit" :disabled="formStatus.loading || formStatus.success"
+                class="w-full bg-blue-600 text-white rounded-lg px-4 py-2 font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+                {{ formStatus.loading 
+                  ? translations.sending[currentLanguage] 
+                  : (formStatus.success 
+                    ? translations.sent[currentLanguage] 
+                    : translations.submit[currentLanguage]) }}
+              </button>
+            </form>
+          </div>
+        </transition>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -789,7 +792,7 @@ export default {
     });
 
     const openModal = () => {
-      ym(65948110,'reachGoal','openmodal');
+      // ym analytics call removed due to ReferenceError: ym is not defined
       formData.name = '';
       formData.contact = '';
       formStatus.loading = false;
