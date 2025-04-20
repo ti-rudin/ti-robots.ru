@@ -20,6 +20,50 @@
           {{ translations.cta[currentLanguage] }}
         </button>
       </section>
+
+      <!-- New Section: How we work (steps) -->
+      <section class="mt-12">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
+          {{ translations.howWeWorkTitle[currentLanguage] }}
+        </h2>
+        <ol class="relative border-l border-gray-200 dark:border-gray-700">
+          <li v-for="(step, index) in translations.steps[currentLanguage]" :key="index" class="mb-10 ml-6">
+            <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full -left-4 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-500">
+              <svg aria-hidden="true" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L9 14.414 5.293 10.707a1 1 0 011.414-1.414L9 11.586l6.293-6.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </span>
+            <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+              {{ step }}
+            </h3>
+          </li>
+        </ol>
+        <button 
+          class="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-200"
+          @click="openModal">
+          {{ translations.discussProjectBtn[currentLanguage] }}
+        </button>
+      </section>
+
+      <!-- New Section: Solutions -->
+      <section class="mt-12 space-y-6">
+        <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
+          {{ translations.solutionsTitle[currentLanguage] }}
+        </h2>
+        <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+          <li v-for="(solution, idx) in translations.solutions[currentLanguage]" :key="idx">
+            <a :href="solution.link" class="hover:underline font-medium text-blue-600 dark:text-blue-400">
+              {{ solution.name }}
+            </a>
+            <span>: {{ solution.desc }}</span>
+          </li>
+        </ul>
+        <button 
+          class="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-200"
+          @click="$router.push('/cases')">
+          {{ translations.allCasesBtn[currentLanguage] }}
+        </button>
+      </section>
     </div>
 
     <!-- Modal Container -->
@@ -127,6 +171,56 @@ export default {
       cta: {
         ru: 'Оставьте заявку — расскажем, как роботы упростят ваш бизнес!',
         en: 'Leave a request — we will tell you how robots simplify your business!',
+      },
+
+      // New section: How we work (steps)
+      howWeWorkTitle: {
+        ru: 'Простой путь к автоматизации',
+        en: 'Simple path to automation',
+      },
+      steps: {
+        ru: [
+          'Анализ процессов',
+          'Разработка робота',
+          'Тестирование',
+          'Внедрение и обучение',
+          'Поддержка и масштабирование',
+        ],
+        en: [
+          'Process analysis',
+          'Robot development',
+          'Testing',
+          'Implementation and training',
+          'Support and scaling',
+        ],
+      },
+      discussProjectBtn: {
+        ru: 'Обсудить проект',
+        en: 'Discuss project',
+      },
+
+      // New section: Solutions (brief + links)
+      solutionsTitle: {
+        ru: 'Какие процессы можно автоматизировать?',
+        en: 'Which processes can be automated?',
+      },
+      solutions: {
+        ru: [
+          { name: 'Бухгалтерия и финансы', desc: 'автоформирование отчетов', link: '/cases#accounting' },
+          { name: 'HR', desc: 'автоматический подбор кандидатов', link: '/cases#hr' },
+          { name: 'Логистика', desc: 'сбор и анализ данных поставок', link: '/cases#logistics' },
+          { name: 'Клиентский сервис', desc: 'чат-боты и обработка запросов', link: '/cases#customer-service' },
+        ],
+        en: [
+          { name: 'Accounting and Finance', desc: 'auto report generation', link: '/cases#accounting' },
+          { name: 'HR', desc: 'automatic candidate selection', link: '/cases#hr' },
+          { name: 'Logistics', desc: 'collection and analysis of supply data', link: '/cases#logistics' },
+          { name: 'Customer Service', desc: 'chatbots and request processing', link: '/cases#customer-service' },
+        ],
+      },
+      allCasesBtn: {
+        ru: 'Все кейсы автоматизации',
+        en: 'All automation cases',
       },
     };
 
