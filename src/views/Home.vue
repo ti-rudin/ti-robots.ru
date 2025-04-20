@@ -1,68 +1,75 @@
 <template>
-  <!-- Single root div -->
   <div>
     <div class="max-w-4xl mx-auto p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
-      <h1 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">{{ translations.title[currentLanguage] }}</h1>
-      <p class="text-gray-700 dark:text-gray-300 mb-6">
-        {{ translations.subtitle[currentLanguage] }}
-      </p>
-      <section class="space-y-4">
-        <h2 class="text-2xl font-semibold mb-2">{{ translations.advantagesTitle[currentLanguage] }}</h2>
-        <ul class="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
-          <li>{{ translations.advantage1[currentLanguage] }}</li>
-          <li>{{ translations.advantage2[currentLanguage] }}</li>
-          <li>{{ translations.advantage3[currentLanguage] }}</li>
-          <li>{{ translations.advantage4[currentLanguage] }}</li>
-        </ul>
-        <button 
-          class="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-200"
-          @click="openModal">
-          {{ translations.cta[currentLanguage] }}
-        </button>
-      </section>
+      <section class="bg-white dark:bg-gray-900">
+        <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6">
+          <div class="max-w-3xl mx-auto text-center">
+            <h1 class="mb-4 text-4xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-5xl">
+              {{ translations.title[currentLanguage] }}
+            </h1>
+            <p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
+              {{ translations.subtitle[currentLanguage] }}
+            </p>
+          </div>
+          <div class="grid max-w-3xl grid-cols-1 gap-8 mx-auto mt-8 text-left md:grid-cols-3 md:mt-16">
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">{{ translations.product1Title[currentLanguage] }}</h3>
+              <p class="mb-4 font-light text-gray-500 dark:text-gray-400">{{ translations.product1Desc[currentLanguage] }}</p>
+              <ul class="mb-4 space-y-2 text-gray-500 dark:text-gray-400">
+                <li v-for="(feature, idx) in translations.product1Features[currentLanguage]" :key="'p1f'+idx" class="flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-blue-600 dark:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L9 14.414 5.293 10.707a1 1 0 011.414-1.414L9 11.586l6.293-6.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  {{ feature }}
+                </li>
+              </ul>
+              <p class="italic text-gray-600 dark:text-gray-400">{{ translations.product1IdealFor[currentLanguage] }}</p>
+            </div>
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">{{ translations.product2Title[currentLanguage] }}</h3>
+              <p class="mb-4 font-light text-gray-500 dark:text-gray-400">{{ translations.product2Desc[currentLanguage] }}</p>
+              <ul class="mb-4 space-y-2 text-gray-500 dark:text-gray-400">
+                <li v-for="(feature, idx) in translations.product2Features[currentLanguage]" :key="'p2f'+idx" class="flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-blue-600 dark:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L9 14.414 5.293 10.707a1 1 0 011.414-1.414L9 11.586l6.293-6.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  {{ feature }}
+                </li>
+              </ul>
+              <p class="italic text-gray-600 dark:text-gray-400">{{ translations.product2Call[currentLanguage] }}</p>
+            </div>
+            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">{{ translations.product3Title[currentLanguage] }}</h3>
+              <p class="mb-4 font-light text-gray-500 dark:text-gray-400">{{ translations.product3Desc[currentLanguage] }}</p>
+              <ul class="mb-4 space-y-2 text-gray-500 dark:text-gray-400">
+                <li v-for="(feature, idx) in translations.product3Features[currentLanguage]" :key="'p3f'+idx" class="flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-blue-600 dark:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L9 14.414 5.293 10.707a1 1 0 011.414-1.414L9 11.586l6.293-6.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  {{ feature }}
+                </li>
+              </ul>
+              <p class="italic text-gray-600 dark:text-gray-400">{{ translations.product3Call[currentLanguage] }}</p>
+            </div>
+          </div>
 
-      <!-- New Section: How we work (steps) -->
-      <section class="mt-12">
-        <h2 class="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
-          {{ translations.howWeWorkTitle[currentLanguage] }}
-        </h2>
-        <ol class="relative border-l border-gray-200 dark:border-gray-700">
-          <li v-for="(step, index) in translations.steps[currentLanguage]" :key="index" class="mb-10 ml-6">
-            <span class="absolute flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full -left-4 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-500">
-              <svg aria-hidden="true" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L9 14.414 5.293 10.707a1 1 0 011.414-1.414L9 11.586l6.293-6.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-              </svg>
-            </span>
-            <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-              {{ step }}
-            </h3>
-          </li>
-        </ol>
-        <button 
-          class="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-200"
-          @click="openModal">
-          {{ translations.discussProjectBtn[currentLanguage] }}
-        </button>
-      </section>
+          <div class="max-w-3xl mx-auto mt-16 text-center">
+            <h2 class="mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white md:text-4xl">
+              {{ translations.whyChooseUsTitle[currentLanguage] }}
+            </h2>
+            <ul class="max-w-xl mx-auto space-y-4 text-left text-gray-500 dark:text-gray-400 md:text-lg">
+              <li v-for="(point, idx) in translations.whyChooseUsPoints[currentLanguage]" :key="'why'+idx" class="flex items-start">
+                <svg class="flex-shrink-0 w-6 h-6 mr-2 text-blue-600 dark:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L9 14.414 5.293 10.707a1 1 0 011.414-1.414L9 11.586l6.293-6.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                {{ point }}
+              </li>
+            </ul>
+          </div>
 
-      <!-- New Section: Solutions -->
-      <section class="mt-12 space-y-6">
-        <h2 class="text-2xl font-semibold mb-4 text-gray-900 dark:text-white">
-          {{ translations.solutionsTitle[currentLanguage] }}
-        </h2>
-        <ul class="space-y-3 text-gray-700 dark:text-gray-300">
-          <li v-for="(solution, idx) in translations.solutions[currentLanguage]" :key="idx">
-            <a :href="solution.link" class="hover:underline font-medium text-blue-600 dark:text-blue-400">
-              {{ solution.name }}
-            </a>
-            <span>: {{ solution.desc }}</span>
-          </li>
-        </ul>
-        <button 
-          class="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-200"
-          @click="$router.push('/cases')">
-          {{ translations.allCasesBtn[currentLanguage] }}
-        </button>
+          <div class="max-w-3xl mx-auto mt-16 text-center">
+            <p class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">{{ translations.contactCall[currentLanguage] }}</p>
+            <p class="mb-6 text-gray-500 dark:text-gray-400">{{ translations.contactPrompt[currentLanguage] }}</p>
+            <button 
+              class="inline-flex items-center px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
+              @click="openModal">
+              {{ translations.cta[currentLanguage] }}
+              <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            </button>
+          </div>
+        </div>
       </section>
     </div>
 
@@ -70,7 +77,6 @@
     <transition name="modal-fade">
       <div v-if="formModal" @click.self="closeModal"
         class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 p-4 backdrop-blur-sm">
-        <!-- Add transition for the modal content -->
         <transition name="modal-content-fade">
           <div v-if="formModal" class="modal-content bg-white dark:bg-gray-800 rounded-lg p-6 shadow-xl w-full max-w-md transform transition-all duration-300 ease-out">
             <div class="flex justify-between items-center mb-4">
@@ -108,7 +114,6 @@
                   :placeholder="currentLanguage === 'ru' ? '8(XXX)XXX-XX-XX или email@example.com' : '8(XXX)XXX-XX-XX or email@example.com'" required
                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-600 dark:placeholder-gray-400" />
               </div>
-              <!-- Status Messages -->
               <div class="h-6 text-sm text-center">
                 <p v-if="formStatus.loading" class="text-blue-600 dark:text-blue-400 animate-pulse">
                   {{ currentLanguage === 'ru' ? 'Отправка...' : 'Sending...' }}
@@ -141,86 +146,127 @@ export default {
   setup() {
     const translations = {
       title: {
-        ru: 'Автоматизируйте бизнес с помощью программных роботов',
-        en: 'Automate your business with software robots',
+        ru: 'Инновационные IT-решения для бизнеса и жизни',
+        en: 'Innovative IT Solutions for Business and Life',
       },
       subtitle: {
-        ru: 'Разрабатываем и внедряем RPA-решения, которые экономят время, снижают затраты и исключают ошибки.',
-        en: 'We develop and implement RPA solutions that save time, reduce costs, and eliminate errors.',
+        ru: 'Лидер в разработке передового программного обеспечения для автоматизации торговли, умного дома и организации мероприятий. Мы создаем технологии, которые делают жизнь проще, а бизнес – эффективнее.',
+        en: 'A leader in advanced software development for trade automation, smart homes, and event management. We create technologies that make life easier and business more efficient.',
       },
-      advantagesTitle: {
-        ru: 'Преимущества',
-        en: 'Advantages',
+
+      productsTitle: {
+        ru: 'Наши продукты',
+        en: 'Our Products',
       },
-      advantage1: {
-        ru: 'В 5 раз быстрее ручных операций',
-        en: '5 times faster than manual operations',
+
+      product1Title: {
+        ru: '1. TSL Bot – Автоматизированная торговля с Trailing Stop Loss',
+        en: '1. TSL Bot – Automated Trading with Trailing Stop Loss',
       },
-      advantage2: {
-        ru: 'До 70% экономии на рутинных процессах',
-        en: 'Up to 70% savings on routine processes',
+      product1Desc: {
+        ru: 'TSL Bot – это мощная система для автоматического управления стоп-лоссом с поддержкой множества инструментов.',
+        en: 'TSL Bot is a powerful system for automatic stop-loss management supporting multiple instruments.',
       },
-      advantage3: {
-        ru: 'Интеграция с 1С, SAP, Excel и другими системами',
-        en: 'Integration with 1C, SAP, Excel, and other systems',
+      product1Features: {
+        ru: [
+          'Trailing Stop Loss – динамичное сопровождение сделок для максимизации прибыли.',
+          'Асинхронная архитектура – высокая производительность и надежность.',
+          'Горизонтальное масштабирование – легко адаптируется под любые объемы торгов.',
+          'Мультиинструментность – одновременная работа с разными активами.',
+        ],
+        en: [
+          'Trailing Stop Loss – dynamic trade tracking to maximize profits.',
+          'Asynchronous architecture – high performance and reliability.',
+          'Horizontal scaling – easily adapts to any trading volume.',
+          'Multi-instrument support – simultaneous operation with different assets.',
+        ],
       },
-      advantage4: {
-        ru: 'Поддержка 24/7',
-        en: '24/7 support',
+      product1IdealFor: {
+        ru: 'Идеально для трейдеров и инвестиционных фондов, ценящих скорость и точность.',
+        en: 'Ideal for traders and investment funds valuing speed and precision.',
       },
+
+      product2Title: {
+        ru: '2. Умный дом на базе WirenBoard',
+        en: '2. Smart Home based on WirenBoard',
+      },
+      product2Desc: {
+        ru: 'Современное решение для автоматизации жилых и коммерческих помещений.',
+        en: 'A modern solution for automating residential and commercial premises.',
+      },
+      product2Features: {
+        ru: [
+          'Полный контроль – управление светом, отоплением, безопасностью и мультимедиа.',
+          'Удобство – интеграция с мобильными приложениями и голосовыми помощниками.',
+          'Энергоэффективность – умные сценарии для экономии ресурсов.',
+        ],
+        en: [
+          'Full control – manage lighting, heating, security, and multimedia.',
+          'Convenience – integration with mobile apps and voice assistants.',
+          'Energy efficiency – smart scenarios for resource saving.',
+        ],
+      },
+      product2Call: {
+        ru: 'Превратите свой дом в технологичный и безопасный комфорт-пространство!',
+        en: 'Turn your home into a technological and safe comfort space!',
+      },
+
+      product3Title: {
+        ru: '3. Концертный софт – организация мероприятий нового уровня',
+        en: '3. Concert Software – Next-level Event Management',
+      },
+      product3Desc: {
+        ru: 'Комплексная система для проведения концертов, фестивалей и корпоративных событий.',
+        en: 'A comprehensive system for concerts, festivals, and corporate events.',
+      },
+      product3Features: {
+        ru: [
+          'Три кабинета – для зрителей, артистов и организаторов.',
+          'Интеграция с VK – авторизация и автоматическая галерея фото с тегами.',
+          'Трансляция текущего трека – название песни, текст, лайки в реальном времени.',
+          'Рейтинг артистов – автоматический подсчет лайков и формирование таблицы результатов.',
+        ],
+        en: [
+          'Three dashboards – for viewers, artists, and organizers.',
+          'VK integration – authorization and automatic photo gallery with tags.',
+          'Current track broadcast – song title, lyrics, likes in real time.',
+          'Artist rating – automatic like counting and leaderboard generation.',
+        ],
+      },
+      product3Call: {
+        ru: 'Создавайте незабываемые события с нашим цифровым помощником!',
+        en: 'Create unforgettable events with our digital assistant!',
+      },
+
+      whyChooseUsTitle: {
+        ru: 'Почему выбирают нас?',
+        en: 'Why Choose Us?',
+      },
+      whyChooseUsPoints: {
+        ru: [
+          'Опыт и экспертиза – работаем с передовыми технологиями.',
+          'Гибкость решений – адаптируем продукты под ваши задачи.',
+          'Надежность – стабильная работа даже при высоких нагрузках.',
+        ],
+        en: [
+          'Experience and expertise – working with cutting-edge technologies.',
+          'Solution flexibility – adapting products to your needs.',
+          'Reliability – stable operation even under high loads.',
+        ],
+      },
+
+      contactCall: {
+        ru: 'Технологии будущего уже сегодня!',
+        en: 'The technology of the future today!',
+      },
+      contactPrompt: {
+        ru: 'Свяжитесь с нами – обсудим ваш проект и предложим лучшее решение!',
+        en: 'Contact us – let’s discuss your project and offer the best solution!',
+      },
+
       cta: {
-        ru: 'Оставьте заявку — расскажем, как роботы упростят ваш бизнес!',
-        en: 'Leave a request — we will tell you how robots simplify your business!',
-      },
-
-      // New section: How we work (steps)
-      howWeWorkTitle: {
-        ru: 'Простой путь к автоматизации',
-        en: 'Simple path to automation',
-      },
-      steps: {
-        ru: [
-          'Анализ процессов',
-          'Разработка робота',
-          'Тестирование',
-          'Внедрение и обучение',
-          'Поддержка и масштабирование',
-        ],
-        en: [
-          'Process analysis',
-          'Robot development',
-          'Testing',
-          'Implementation and training',
-          'Support and scaling',
-        ],
-      },
-      discussProjectBtn: {
-        ru: 'Обсудить проект',
-        en: 'Discuss project',
-      },
-
-      // New section: Solutions (brief + links)
-      solutionsTitle: {
-        ru: 'Какие процессы можно автоматизировать?',
-        en: 'Which processes can be automated?',
-      },
-      solutions: {
-        ru: [
-          { name: 'Бухгалтерия и финансы', desc: 'автоформирование отчетов', link: '/cases#accounting' },
-          { name: 'HR', desc: 'автоматический подбор кандидатов', link: '/cases#hr' },
-          { name: 'Логистика', desc: 'сбор и анализ данных поставок', link: '/cases#logistics' },
-          { name: 'Клиентский сервис', desc: 'чат-боты и обработка запросов', link: '/cases#customer-service' },
-        ],
-        en: [
-          { name: 'Accounting and Finance', desc: 'auto report generation', link: '/cases#accounting' },
-          { name: 'HR', desc: 'automatic candidate selection', link: '/cases#hr' },
-          { name: 'Logistics', desc: 'collection and analysis of supply data', link: '/cases#logistics' },
-          { name: 'Customer Service', desc: 'chatbots and request processing', link: '/cases#customer-service' },
-        ],
-      },
-      allCasesBtn: {
-        ru: 'Все кейсы автоматизации',
-        en: 'All automation cases',
+        ru: 'Свяжитесь с нами – обсудим ваш проект и предложим лучшее решение!',
+        en: 'Contact us – let’s discuss your project and offer the best solution!',
       },
     };
 
