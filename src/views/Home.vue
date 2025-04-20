@@ -11,8 +11,11 @@
               {{ translations.subtitle[currentLanguage] }}
             </p>
           </div>
-          <div class="grid max-w-3xl grid-cols-1 gap-8 mx-auto mt-8 text-left md:grid-cols-3 md:mt-16">
-            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+          <div class="max-w-3xl mx-auto mt-8 text-left md:mt-16 space-y-8">
+            <router-link to="/case-binance-tsl" class="block p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+              <div class="mb-4 h-48 bg-gray-200 dark:bg-gray-700 rounded-md flex items-center justify-center text-gray-400 dark:text-gray-500">
+                <span>Image Placeholder</span>
+              </div>
               <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">{{ translations.product1Title[currentLanguage] }}</h3>
               <p class="mb-4 font-light text-gray-500 dark:text-gray-400">{{ translations.product1Desc[currentLanguage] }}</p>
               <ul class="mb-4 space-y-2 text-gray-500 dark:text-gray-400">
@@ -22,8 +25,11 @@
                 </li>
               </ul>
               <p class="italic text-gray-600 dark:text-gray-400">{{ translations.product1IdealFor[currentLanguage] }}</p>
-            </div>
-            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            </router-link>
+            <router-link to="/product2" class="block p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+              <div class="mb-4 h-48 bg-gray-200 dark:bg-gray-700 rounded-md flex items-center justify-center text-gray-400 dark:text-gray-500">
+                <span>Image Placeholder</span>
+              </div>
               <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">{{ translations.product2Title[currentLanguage] }}</h3>
               <p class="mb-4 font-light text-gray-500 dark:text-gray-400">{{ translations.product2Desc[currentLanguage] }}</p>
               <ul class="mb-4 space-y-2 text-gray-500 dark:text-gray-400">
@@ -33,8 +39,11 @@
                 </li>
               </ul>
               <p class="italic text-gray-600 dark:text-gray-400">{{ translations.product2Call[currentLanguage] }}</p>
-            </div>
-            <div class="p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+            </router-link>
+            <router-link to="/product3" class="block p-6 bg-gray-50 rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+              <div class="mb-4 h-48 bg-gray-200 dark:bg-gray-700 rounded-md flex items-center justify-center text-gray-400 dark:text-gray-500">
+                <span>Image Placeholder</span>
+              </div>
               <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">{{ translations.product3Title[currentLanguage] }}</h3>
               <p class="mb-4 font-light text-gray-500 dark:text-gray-400">{{ translations.product3Desc[currentLanguage] }}</p>
               <ul class="mb-4 space-y-2 text-gray-500 dark:text-gray-400">
@@ -44,7 +53,7 @@
                 </li>
               </ul>
               <p class="italic text-gray-600 dark:text-gray-400">{{ translations.product3Call[currentLanguage] }}</p>
-            </div>
+            </router-link>
           </div>
 
           <div class="max-w-3xl mx-auto mt-16 text-center">
@@ -150,8 +159,8 @@ export default {
         en: 'Innovative IT Solutions for Business and Life',
       },
       subtitle: {
-        ru: 'Лидер в разработке передового программного обеспечения для автоматизации торговли, умного дома и организации мероприятий. Мы создаем технологии, которые делают жизнь проще, а бизнес – эффективнее.',
-        en: 'A leader in advanced software development for trade automation, smart homes, and event management. We create technologies that make life easier and business more efficient.',
+        ru: 'Создаём передовое программное обеспечение для автоматизации торговли, умного дома и организации мероприятий. Мы создаем технологии, которые делают жизнь проще, а бизнес – эффективнее.',
+        en: 'Develop advanced software for trade automation, smart homes, and event management. We create technologies that make life easier and business more efficient.',
       },
 
       productsTitle: {

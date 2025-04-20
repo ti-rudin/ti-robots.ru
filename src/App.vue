@@ -24,12 +24,6 @@
               <router-link to="/" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
                 {{ translations.home[currentLanguage] }}
               </router-link>
-              <router-link to="/services" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
-                {{ translations.services[currentLanguage] }}
-              </router-link>
-              <router-link to="/cases" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
-                {{ translations.cases[currentLanguage] }}
-              </router-link>
               <router-link to="/about" class="flex items-center px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-semibold">
                 {{ translations.about[currentLanguage] }}
               </router-link>
@@ -74,12 +68,6 @@
       <div v-if="mobileMenuOpen" class="md:hidden bg-white dark:bg-gray-800 px-4 pt-2 pb-3 space-y-1">
         <router-link @click="closeMobileMenu" to="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
           {{ translations.home[currentLanguage] }}
-        </router-link>
-        <router-link @click="closeMobileMenu" to="/services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
-          {{ translations.services[currentLanguage] }}
-        </router-link>
-        <router-link @click="closeMobileMenu" to="/cases" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
-          {{ translations.cases[currentLanguage] }}
         </router-link>
         <router-link @click="closeMobileMenu" to="/about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
           {{ translations.about[currentLanguage] }}
