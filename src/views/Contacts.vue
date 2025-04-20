@@ -2,8 +2,11 @@
   <div class="max-w-4xl mx-auto p-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
     <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">{{ translations.title[currentLanguage] }}</h1>
     <p class="text-gray-700 dark:text-gray-300 mb-4">{{ translations.intro[currentLanguage] }}</p>
-    <p class="text-gray-700 dark:text-gray-300 mb-2">{{ translations.phoneLabel[currentLanguage] }}: +X (XXX) XXX-XX-XX</p>
-    <p class="text-gray-700 dark:text-gray-300 mb-6">{{ translations.emailLabel[currentLanguage] }}: contact@вашсайт.ru</p>
+    <p class="text-gray-700 dark:text-gray-300 mb-6">
+      {{ translations.spamNotice[currentLanguage] }}
+      <a href="https://t.me/yourtelegramgroup" target="_blank" class="text-blue-600 hover:underline">Telegram</a>
+      {{ translations.orFillForm[currentLanguage] }}
+    </p>
     <form @submit.prevent="submitForm" class="space-y-4 max-w-md">
       <div>
         <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ translations.nameLabel[currentLanguage] }}</label>
@@ -14,6 +17,11 @@
         <label for="contact" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ translations.contactLabel[currentLanguage] }} <span class="text-red-500">*</span></label>
         <input type="text" id="contact" v-model="formData.contact" required :placeholder="translations.contactPlaceholder[currentLanguage]"
           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400" />
+      </div>
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{{ translations.descriptionLabel[currentLanguage] }} <span class="text-red-500">*</span></label>
+        <textarea id="description" v-model="formData.description" required :placeholder="translations.descriptionPlaceholder[currentLanguage]"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 resize-y" rows="4"></textarea>
       </div>
       <div class="h-6 text-sm text-center">
         <p v-if="formStatus.loading" class="text-blue-600 dark:text-blue-400 animate-pulse">{{ translations.sending[currentLanguage] }}</p>
@@ -37,7 +45,8 @@ export default {
   setup() {
     const formData = reactive({
       name: '',
-      contact: ''
+      contact: '',
+      description: ''
     });
     const formStatus = reactive({
       loading: false,
@@ -54,13 +63,13 @@ export default {
         ru: 'Хотите узнать, какие процессы можно автоматизировать в вашей компании?',
         en: 'Want to know which processes can be automated in your company?',
       },
-      phoneLabel: {
-        ru: '📞 Звоните',
-        en: '📞 Call',
+      spamNotice: {
+        ru: 'Мы не оставляем номера телефонов из-за спама, поэтому предлагаем присоединиться к нашей группе в',
+        en: 'We do not leave phone numbers due to spam, so we suggest joining our group in',
       },
-      emailLabel: {
-        ru: '✉ Или пишите',
-        en: '✉ Or write to',
+      orFillForm: {
+        ru: 'и задать вопрос там или заполнить небольшую форму, и мы перезвоним вам.',
+        en: 'and ask your question there or fill out a small form, and we will call you back.',
       },
       nameLabel: {
         ru: 'Имя',
@@ -71,12 +80,20 @@ export default {
         en: 'Your name (optional)',
       },
       contactLabel: {
-        ru: 'Телефон или Email',
-        en: 'Phone or Email',
+        ru: 'Телефон',
+        en: 'Phone',
       },
       contactPlaceholder: {
-        ru: '8(XXX)XXX-XX-XX или email@example.com',
-        en: '8(XXX)XXX-XX-XX or email@example.com',
+        ru: '8(XXX)XXX-XX-XX',
+        en: '8(XXX)XXX-XX-XX',
+      },
+      descriptionLabel: {
+        ru: 'Описание задачи',
+        en: 'Task Description',
+      },
+      descriptionPlaceholder: {
+        ru: 'Опишите вашу задачу (обязательно)',
+        en: 'Describe your task (required)',
       },
       sending: {
         ru: 'Отправка...',
@@ -91,8 +108,8 @@ export default {
         en: 'Submit Request',
       },
       errorRequired: {
-        ru: 'Пожалуйста, укажите Телефон или Email.',
-        en: 'Please provide Phone or Email.',
+        ru: 'Пожалуйста, укажите Телефон и описание задачи.',
+        en: 'Please provide Phone and task description.',
       },
       errorSend: {
         ru: 'Ошибка отправки. Попробуйте снова или свяжитесь с нами другим способом.',
@@ -113,7 +130,7 @@ export default {
       formStatus.error = null;
       formStatus.success = null;
 
-      if (!formData.contact || !formData.contact.trim()) {
+      if (!formData.contact || !formData.contact.trim() || !formData.description || !formData.description.trim()) {
         formStatus.error = translations.errorRequired[currentLanguage.value];
         formStatus.loading = false;
         return;
@@ -121,7 +138,8 @@ export default {
 
       const params = new URLSearchParams({
         name: formData.name.trim(),
-        tel: formData.contact.trim()
+        tel: formData.contact.trim(),
+        description: formData.description.trim()
       });
 
       try {
@@ -137,6 +155,7 @@ export default {
           formStatus.success = translations.successMessage[currentLanguage.value];
           formData.name = '';
           formData.contact = '';
+          formData.description = '';
           setTimeout(() => {
             if (formStatus.success) {
               formStatus.success = null;
