@@ -43,7 +43,7 @@
       <h2>{{ translations.content.conclusion[currentLanguage] }}</h2>
       <p>{{ translations.content.conclusionText[currentLanguage] }}</p>
 
-      <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
+      <div class="bg-blue-50 dark:bg-blue-900 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
         <h3 class="text-blue-800 dark:text-blue-200 mt-0">{{ translations.content.tip[currentLanguage] }}</h3>
         <p class="text-blue-700 dark:text-blue-300 mb-0">{{ translations.content.tipText[currentLanguage] }}</p>
       </div>
