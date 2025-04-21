@@ -10,16 +10,26 @@ const routes = [
     component: () => import('../views/Home.vue'),
   },
   {
+    path: '/article',
+    name: 'article',
+    component: () => import('../views/Article.vue'),
+  },
+  {
+    path: '/event-soft',
+    name: 'event-soft',
+    component: () => import('../views/EventSoft.vue'),
+  },
+  {
+    path: '/smart-home',
+    name: 'smart-home',
+    component: () => import('../views/SmartHome.vue'),
+  },
+  {
     path: '/services',
     name: 'services',
     component: () => import('../views/Services.vue'),
   },
-  {
-    path: '/cases',
-    name: 'cases',
-    component: () => import('../views/Cases.vue'),
-  },
-  {
+   {
     path: '/case-binance-tsl',
     name: 'case-binance-tsl',
     component: () => import('../views/CaseBinanceTSL.vue'),
