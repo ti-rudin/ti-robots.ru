@@ -97,73 +97,7 @@
       </div>
     </section>
 
-    <!-- Comments Section -->
-    <section class="max-w-3xl mx-auto">
-      <h2 class="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
-        {{ translations.comments[currentLanguage] }} (3)
-      </h2>
-      
-      <div class="space-y-6">
-        <!-- Comment 1 -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-          <div class="flex items-start mb-4">
-            <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center mr-3">
-              <span class="text-lg">👤</span>
-            </div>
-            <div>
-              <h4 class="font-medium text-gray-900 dark:text-white">Alexey Petrov</h4>
-              <p class="text-xs text-gray-500 dark:text-gray-400">May 15, 2023</p>
-            </div>
-          </div>
-          <p class="text-gray-700 dark:text-gray-300">
-            {{ translations.commentText[currentLanguage] }}
-          </p>
-        </div>
 
-        <!-- Comment 2 -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-          <div class="flex items-start mb-4">
-            <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center mr-3">
-              <span class="text-lg">👩</span>
-            </div>
-            <div>
-              <h4 class="font-medium text-gray-900 dark:text-white">Maria Ivanova</h4>
-              <p class="text-xs text-gray-500 dark:text-gray-400">May 14, 2023</p>
-            </div>
-          </div>
-          <p class="text-gray-700 dark:text-gray-300">
-            {{ translations.commentText2[currentLanguage] }}
-          </p>
-        </div>
-
-        <!-- Comment Form -->
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
-          <h3 class="text-lg font-medium mb-4 text-gray-900 dark:text-white">
-            {{ translations.addComment[currentLanguage] }}
-          </h3>
-          <form class="space-y-4">
-            <div>
-              <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {{ translations.form.name[currentLanguage] }}
-              </label>
-              <input type="text" id="name" 
-                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            </div>
-            <div>
-              <label for="comment" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {{ translations.form.comment[currentLanguage] }}
-              </label>
-              <textarea id="comment" rows="4"
-                class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white resize-y"></textarea>
-            </div>
-            <button type="submit"
-              class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
-              {{ translations.form.submit[currentLanguage] }}
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 
