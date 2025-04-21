@@ -7,8 +7,8 @@
           {{ translations.title[currentLanguage] }}
         </h1>
         <p class="text-lg text-gray-600 dark:text-gray-400">
-          {{ currentLanguage === 'ru' 
-            ? 'Автоматизированный ассистент трейдера для Trailing Stop Loss на Binance' 
+          {{ currentLanguage === 'ru'
+            ? 'Автоматизированный ассистент трейдера для Trailing Stop Loss на Binance'
             : 'Automated trading assistant for Trailing Stop Loss on Binance' }}
         </p>
       </div>
@@ -22,7 +22,7 @@
           <p class="text-gray-700 dark:text-gray-300 mb-4">
             {{ translations.githubDescription[currentLanguage] }}
           </p>
-          <a href="https://github.com/ti-rudin/binance-tsl-bot" onclick="ym(65948110,'reachGoal','togithub')" target="_blank"
+          <a href="https://github.com/ti-rudin/binance-tsl-bot" target="_blank"
             class="inline-block bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-200">
             {{ translations.download[currentLanguage] }}
           </a>
@@ -56,7 +56,7 @@
             {{ translations.descriptionTitle[currentLanguage] }}
           </h2>
           <p class="leading-relaxed">
-            <strong>{{ translations.botName[currentLanguage] }}</strong> 
+            <strong>{{ translations.botName[currentLanguage] }}</strong>
             {{ translations.description[currentLanguage] }}
           </p>
         </section>
@@ -88,7 +88,7 @@
           </p>
           <ul class="list-disc list-inside space-y-2">
             <li>
-              <strong>{{ translations.nodeRedTitle[currentLanguage] }}</strong>: 
+              <strong>{{ translations.nodeRedTitle[currentLanguage] }}</strong>:
               {{ translations.nodeRedDescription[currentLanguage] }}
             </li>
             <li>
@@ -101,15 +101,15 @@
               </ul>
             </li>
             <li>
-              <strong>{{ translations.workersTitle[currentLanguage] }}</strong>: 
+              <strong>{{ translations.workersTitle[currentLanguage] }}</strong>:
               {{ translations.workersDescription[currentLanguage] }}
             </li>
             <li>
-              <strong>{{ translations.frontendTitle[currentLanguage] }}</strong>: 
+              <strong>{{ translations.frontendTitle[currentLanguage] }}</strong>:
               {{ translations.frontendDescription[currentLanguage] }}
             </li>
             <li>
-              <strong>Redis</strong>: 
+              <strong>Redis</strong>:
               {{ translations.redisDescription[currentLanguage] }}
             </li>
           </ul>
@@ -221,15 +221,15 @@ docker-compose up -d</code></pre>
           </p>
           <ul class="list-disc list-inside space-y-2">
             <li>
-              <strong>{{ translations.redisSnapshots[currentLanguage] }}</strong>: 
+              <strong>{{ translations.redisSnapshots[currentLanguage] }}</strong>:
               {{ translations.redisSnapshotsDescription[currentLanguage] }}
             </li>
             <li>
-              <strong>{{ translations.restartRecovery[currentLanguage] }}</strong>: 
+              <strong>{{ translations.restartRecovery[currentLanguage] }}</strong>:
               {{ translations.restartRecoveryDescription[currentLanguage] }}
             </li>
             <li>
-              <strong>{{ translations.locksTitle[currentLanguage] }}</strong>: 
+              <strong>{{ translations.locksTitle[currentLanguage] }}</strong>:
               {{ translations.locksDescription[currentLanguage] }}
             </li>
           </ul>
@@ -285,7 +285,7 @@ docker-compose up -d</code></pre>
             {{ translations.collaborationInvitation[currentLanguage] }}
           </p>
           <p>
-            {{ translations.repository[currentLanguage] }} 
+            {{ translations.repository[currentLanguage] }}
             <a
               class="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200 break-all hover:underline"
               href="https://github.com/ti-rudin/binance-tsl-bot"
@@ -344,59 +344,64 @@ docker-compose up -d</code></pre>
     <transition name="modal-fade">
       <div v-if="formModal" @click.self="closeModal"
         class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 p-4 backdrop-blur-sm">
-        <!-- Add transition for the modal content -->
-        <transition name="modal-content-fade">
-          <div v-if="formModal" class="modal-content bg-white dark:bg-gray-800 rounded-lg p-6 shadow-xl w-full max-w-md transform transition-all duration-300 ease-out">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-md transform transition-all duration-300 ease-out"
+          :class="formModal ? 'animate-fade-in-up' : ''">
+          <div class="p-8">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
                 {{ translations.modalTitle[currentLanguage] }}
               </h3>
-              <button @click="closeModal" aria-label="Закрыть модальное окно" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors duration-200">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              <button @click="closeModal" aria-label="Close" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
               </button>
             </div>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              {{ translations.modalDescription[currentLanguage] }}
+
+            <p class="text-gray-600 dark:text-gray-400 mb-6">
+              {{ currentLanguage === 'ru'
+                ? 'Оставьте свои контактные данные, и мы свяжемся с вами для обсуждения деталей установки бота на вашем сервере.'
+                : 'Leave your contact details and we will contact you to discuss the details of bot installation on your server.' }}
             </p>
-            <form class="flex flex-col space-y-4" @submit.prevent="submitForm">
+
+            <form class="space-y-6" @submit.prevent="submitForm">
               <div>
-                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label for="modal-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {{ translations.nameLabel[currentLanguage] }}
                 </label>
-                <input type="text" v-model="formData.name" name="name" id="name" 
+                <input type="text" id="modal-name" v-model="formData.name"
                   :placeholder="translations.namePlaceholder[currentLanguage]"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-600 dark:placeholder-gray-400" />
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 transition-colors">
               </div>
+
               <div>
-                <label for="tel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <label for="modal-contact" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {{ translations.contactLabel[currentLanguage] }} <span class="text-red-500">*</span>
                 </label>
-                <input type="text" v-model="formData.contact" name="tel" id="tel"
-                  :placeholder="translations.contactPlaceholder[currentLanguage]" required
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-600 dark:placeholder-gray-400" />
+                <input type="text" id="modal-contact" v-model="formData.contact" required
+                  :placeholder="translations.contactPlaceholder[currentLanguage]"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 transition-colors">
               </div>
-              <!-- Status Messages -->
+
               <div class="h-6 text-sm text-center">
-                <p v-if="formStatus.loading" class="text-blue-600 dark:text-blue-400 animate-pulse">
+                <p v-if="formStatus.loading" class="text-indigo-600 dark:text-indigo-400 animate-pulse">
                   {{ translations.sending[currentLanguage] }}
                 </p>
                 <p v-if="formStatus.error" class="text-red-600 dark:text-red-400">{{ formStatus.error }}</p>
                 <p v-if="formStatus.success" class="text-green-600 dark:text-green-400">{{ formStatus.success }}</p>
               </div>
+
               <button type="submit" :disabled="formStatus.loading || formStatus.success"
-                class="w-full bg-blue-600 text-white rounded-lg px-4 py-2 font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
-                {{ formStatus.loading 
-                  ? translations.sending[currentLanguage] 
-                  : (formStatus.success 
-                    ? translations.sent[currentLanguage] 
+                class="w-full bg-indigo-600 text-white rounded-lg px-6 py-3 font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+                {{ formStatus.loading
+                  ? translations.sending[currentLanguage]
+                  : (formStatus.success
+                    ? translations.sent[currentLanguage]
                     : translations.submit[currentLanguage]) }}
               </button>
             </form>
           </div>
-        </transition>
+        </div>
       </div>
     </transition>
   </div>
@@ -792,7 +797,6 @@ export default {
     });
 
     const openModal = () => {
-      // ym analytics call removed due to ReferenceError: ym is not defined
       formData.name = '';
       formData.contact = '';
       formStatus.loading = false;
@@ -811,8 +815,8 @@ export default {
       formStatus.success = null;
 
       if (!formData.contact || !formData.contact.trim()) {
-        formStatus.error = currentLanguage === 'ru' 
-          ? 'Пожалуйста, укажите Телефон или Email.' 
+        formStatus.error = currentLanguage === 'ru'
+          ? 'Пожалуйста, укажите Телефон или Email.'
           : 'Please provide Phone or Email.';
         formStatus.loading = false;
         return;
@@ -833,8 +837,8 @@ export default {
         );
 
         if (res.ok) {
-          formStatus.success = currentLanguage === 'ru' 
-            ? "Спасибо! Мы свяжемся с Вами в ближайшее время." 
+          formStatus.success = currentLanguage === 'ru'
+            ? "Спасибо! Мы свяжемся с Вами в ближайшее время."
             : "Thank you! We will contact you shortly.";
           formData.name = '';
           formData.contact = '';
@@ -846,14 +850,14 @@ export default {
         } else {
           const errorText = await res.text();
           console.error("Form submission error:", res.status, errorText);
-          formStatus.error = currentLanguage === 'ru' 
-            ? `Ошибка отправки (${res.status}). Попробуйте снова или свяжитесь с нами другим способом.` 
+          formStatus.error = currentLanguage === 'ru'
+            ? `Ошибка отправки (${res.status}). Попробуйте снова или свяжитесь с нами другим способом.`
             : `Submission error (${res.status}). Please try again or contact us another way.`;
         }
       } catch (error) {
         console.error("Network error during form submission:", error);
-        formStatus.error = currentLanguage === 'ru' 
-          ? 'Сетевая ошибка. Проверьте подключение и попробуйте снова.' 
+        formStatus.error = currentLanguage === 'ru'
+          ? 'Сетевая ошибка. Проверьте подключение и попробуйте снова.'
           : 'Network error. Check your connection and try again.';
       } finally {
         formStatus.loading = false;
@@ -894,5 +898,36 @@ export default {
 .modal-content-fade-leave-to {
   transform: translateY(-20px);
   opacity: 0;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
