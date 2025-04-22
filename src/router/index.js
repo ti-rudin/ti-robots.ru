@@ -53,7 +53,11 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // always scroll to top
+    return { left: 0, top: 0 }
+  }
 })
 
 // Navigation guard
