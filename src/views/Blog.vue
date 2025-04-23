@@ -11,7 +11,7 @@
     </section>
 
     <!-- Featured Article -->
-    <section class="mb-16">
+    <section class="mb-16" v-if="featuredArticle">
       <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
         <div class="md:flex">
           <div class="md:w-1/3 bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center p-8">
@@ -19,24 +19,26 @@
           </div>
           <div class="md:w-2/3 p-8">
             <div class="flex flex-wrap gap-2 mb-4">
-              <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm font-medium">
-                {{ translations.featuredTag[currentLanguage] }}
-              </span>
-              <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm font-medium">
-                {{ translations.tags.automation[currentLanguage] }}
+              <span 
+                v-for="tag in featuredArticle.tags.slice(0, 2)" 
+                :key="tag"
+                class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm font-medium">
+                {{ translations.tags[tag]?.[currentLanguage] || tag }}
               </span>
             </div>
             <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-              {{ translations.featuredArticle.title[currentLanguage] }}
+              {{ featuredArticle.title[currentLanguage] }}
             </h2>
             <p class="text-gray-600 dark:text-gray-300 mb-4">
-              {{ translations.featuredArticle.excerpt[currentLanguage] }}
+              {{ featuredArticle.excerpt[currentLanguage] }}
             </p>
             <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-              <span class="mr-4">{{ translations.featuredArticle.date[currentLanguage] }}</span>
-              <span>{{ translations.featuredArticle.readTime[currentLanguage] }}</span>
+              <span class="mr-4">{{ featuredArticle.date[currentLanguage] }}</span>
+              <span>{{ featuredArticle.readTime[currentLanguage] }}</span>
             </div>
-            <router-link to="/article" class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
+            <router-link 
+              :to="`/article/${featuredArticle.id}`" 
+              class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
               {{ translations.readMore[currentLanguage] }}
               <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -53,17 +55,17 @@
         {{ translations.tagsTitle[currentLanguage] }}
       </h2>
       <div class="flex flex-wrap justify-center gap-3">
-        <router-link 
-          v-for="(tag, key) in translations.tags" 
-          :key="key"
-          to="#"
-          class="px-4 py-2 bg-white dark:bg-gray-800 rounded-full shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5"
+        <button 
+          v-for="tag in availableTags" 
+          :key="tag"
+          @click="toggleTag(tag)"
+          class="px-4 py-2 rounded-full shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5"
           :class="{
-            'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200': key === 'featured',
-            'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200': key !== 'featured'
+            'bg-indigo-600 text-white': selectedTags.includes(tag),
+            'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200': !selectedTags.includes(tag)
           }">
-          {{ tag[currentLanguage] }}
-        </router-link>
+          {{ translations.tags[tag]?.[currentLanguage] || tag }}
+        </button>
       </div>
     </section>
 
@@ -157,6 +159,30 @@ export default {
     const articles = ref([]);
     const loading = ref(false);
     const error = ref(null);
+    const selectedTags = ref([]);
+
+    const toggleTag = (tagKey) => {
+      if (selectedTags.value.includes(tagKey)) {
+        selectedTags.value = selectedTags.value.filter(t => t !== tagKey);
+      } else {
+        selectedTags.value = [...selectedTags.value, tagKey];
+      }
+      currentArticlePage.value = 1;
+    };
+    const availableTags = computed(() => {
+      const allTags = articles.value.flatMap(article => article.tags || []);
+      return [...new Set(allTags)]; 
+    });
+    
+    const featuredArticle = computed(() => {
+      const featured = articles.value.filter(article => 
+        article.tags?.includes('featured') || article.tags?.includes('Рекомендуем')
+      );
+
+      return featured.sort((a, b) => 
+        new Date(b.date.en) - new Date(a.date.en)
+      )[0];
+    });
 
     function truncateText(text, maxLength) {
       return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
@@ -304,16 +330,23 @@ export default {
       }
     };
 
+    const filteredArticles = computed(() => {
+      if (selectedTags.value.length === 0) return articles.value;
+      
+      return articles.value.filter(article => 
+        article.tags?.some(tag => selectedTags.value.includes(tag))
+      );
+    });
+
     const paginatedArticles = computed(() => {
       const start = (currentArticlePage.value - 1) * articlesPerPage;
       const end = start + articlesPerPage;
-      return articles.value.slice(start, end);
+      return filteredArticles.value.slice(start, end);
     });
 
     const totalArticlePages = computed(() => {
-      return Math.ceil(articles.value.length / articlesPerPage);
+      return Math.ceil(filteredArticles.value.length / articlesPerPage);
     });
-
     const nextArticlePage = () => {
       if (currentArticlePage.value < totalArticlePages.value) {
         currentArticlePage.value++;
@@ -335,8 +368,13 @@ export default {
       totalArticlePages,
       nextArticlePage,
       prevArticlePage,
+      toggleTag,
+      filteredArticles,
       loading,
-      error
+      error,
+      selectedTags,
+      availableTags,
+      featuredArticle
     };
   }
 }
