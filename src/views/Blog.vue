@@ -74,7 +74,7 @@
       </h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div 
-          v-for="(article, index) in articles" 
+          v-for="(article, index) in paginatedArticles" 
           :key="index"
           class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
           <div class="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
@@ -86,7 +86,7 @@
                 v-for="(tag, tagIndex) in article.tags" 
                 :key="tagIndex"
                 class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-xs font-medium">
-                {{ translations.tags[tag][currentLanguage] }}
+                {{ (translations.tags[tag] || {})[currentLanguage] || tag }}
               </span>
             </div>
             <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">
@@ -108,35 +108,123 @@
     <section class="flex justify-center">
       <nav class="flex items-center space-x-2">
         <button 
-          class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-600 hover:text-white transition-colors">
-          &laquo;
-        </button>
-        <button 
-          v-for="page in 3" 
-          :key="page"
-          class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
-          :class="{
-            'bg-indigo-600 text-white': page === 1,
-            'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700': page !== 1
-          }">
-          {{ page }}
-        </button>
-        <button 
-          class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-600 hover:text-white transition-colors">
-          &raquo;
-        </button>
+            @click="prevArticlePage"
+            :disabled="currentArticlePage === 1"
+            class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
+            :class="{
+              'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-600 hover:text-white': currentArticlePage > 1,
+              'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed': currentArticlePage === 1
+            }">
+            &laquo;
+          </button>
+          
+          <button 
+            v-for="page in totalArticlePages"
+            :key="page"
+            @click="currentArticlePage = page"
+            class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
+            :class="{
+              'bg-indigo-600 text-white': page === currentArticlePage,
+              'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700': page !== currentArticlePage
+            }">
+            {{ page }}
+          </button>
+          
+          <button 
+            @click="nextArticlePage"
+            :disabled="currentArticlePage === totalArticlePages"
+            class="w-10 h-10 flex items-center justify-center rounded-full transition-colors"
+            :class="{
+              'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-indigo-600 hover:text-white': currentArticlePage < totalArticlePages,
+              'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed': currentArticlePage === totalArticlePages
+            }">
+            &raquo;
+          </button>
       </nav>
     </section>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { currentLanguage } from '../stores/language';
 
 export default {
   name: 'BlogPage',
   setup() {
+    const articlesPerPage = 4;
+    const currentArticlePage = ref(1);
+    const articles = ref([]);
+    const loading = ref(false);
+    const error = ref(null);
+
+    function truncateText(text, maxLength) {
+      return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+    }
+
+    function formatDate(dateString, locale) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString(locale, options);
+    }
+
+    function calculateReadTime(text) {
+      if (!text) return "1 min read";
+      const words = text.split(/\s+/).length;
+      const minutes = Math.ceil(words / 200);
+      return `${minutes} min read`;
+    }
+
+    function calculateReadTimeRu(text) {
+      if (!text) return "1 мин чтения";
+      const words = text.split(/\s+/).length;
+      const minutes = Math.ceil(words / 200);
+      return `${minutes} мин чтения`;
+    }
+
+    async function loadArticlesFromGitHub() {
+      loading.value = true;
+      error.value = null;
+      const url = `https://api.github.com/repos/ti-rudin/ti-robots.ru/issues`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const issues = await response.json();
+        
+        articles.value = issues.map((issue) => ({
+          emoji: "📄",
+          tags: issue.labels?.map(label => label.name) || ["github"],
+          title: {
+            en: issue.title,
+            ru: issue.title
+          },
+          excerpt: {
+            en: issue.body ? truncateText(issue.body, 100) : "No description",
+            ru: issue.body ? truncateText(issue.body, 100) : "Нет описания"
+          },
+          date: {
+            en: formatDate(issue.created_at, 'en-US'),
+            ru: formatDate(issue.created_at, 'ru-RU')
+          },
+          readTime: {
+            en: calculateReadTime(issue.body),
+            ru: calculateReadTimeRu(issue.body)
+          }
+        }));
+
+      } catch (err) {
+        console.error("Error loading articles:", err);
+        error.value = err.message;
+        articles.value = [];
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    onMounted(loadArticlesFromGitHub);
+    
+
     const translations = {
       title: {
         ru: 'Блог',
@@ -216,93 +304,39 @@ export default {
       }
     };
 
-    const articles = [
-      {
-        emoji: '📈',
-        tags: ['trading', 'algorithms'],
-        title: {
-          ru: 'Оптимизация TSL бота для Binance',
-          en: 'Optimizing TSL Bot for Binance'
-        },
-        excerpt: {
-          ru: 'Как мы улучшили производительность нашего торгового бота на 37%.',
-          en: 'How we improved our trading bot performance by 37%.'
-        },
-        date: {
-          ru: '10 мая 2023',
-          en: 'May 10, 2023'
-        },
-        readTime: {
-          ru: '4 мин чтения',
-          en: '4 min read'
-        }
-      },
-      {
-        emoji: '🏠',
-        tags: ['smartHome', 'automation'],
-        title: {
-          ru: 'WirenBoard: полное руководство',
-          en: 'WirenBoard: Complete Guide'
-        },
-        excerpt: {
-          ru: 'Все что нужно знать о настройке умного дома на WirenBoard.',
-          en: 'Everything you need to know about setting up a smart home on WirenBoard.'
-        },
-        date: {
-          ru: '5 мая 2023',
-          en: 'May 5, 2023'
-        },
-        readTime: {
-          ru: '7 мин чтения',
-          en: '7 min read'
-        }
-      },
-      {
-        emoji: '🎤',
-        tags: ['events', 'caseStudy'],
-        title: {
-          ru: 'Организация фестиваля с нашим софтом',
-          en: 'Organizing a Festival with Our Software'
-        },
-        excerpt: {
-          ru: 'Как мы автоматизировали все процессы на крупном музыкальном фестивале.',
-          en: 'How we automated all processes at a major music festival.'
-        },
-        date: {
-          ru: '28 апреля 2023',
-          en: 'April 28, 2023'
-        },
-        readTime: {
-          ru: '6 мин чтения',
-          en: '6 min read'
-        }
-      },
-      {
-        emoji: '💻',
-        tags: ['openSource', 'automation'],
-        title: {
-          ru: 'Почему мы выбрали Open Source',
-          en: 'Why We Chose Open Source'
-        },
-        excerpt: {
-          ru: 'Наш опыт работы с открытым кодом и преимущества этого подхода.',
-          en: 'Our experience with open source and the benefits of this approach.'
-        },
-        date: {
-          ru: '20 апреля 2023',
-          en: 'April 20, 2023'
-        },
-        readTime: {
-          ru: '5 мин чтения',
-          en: '5 min read'
-        }
+    const paginatedArticles = computed(() => {
+      const start = (currentArticlePage.value - 1) * articlesPerPage;
+      const end = start + articlesPerPage;
+      return articles.value.slice(start, end);
+    });
+
+    const totalArticlePages = computed(() => {
+      return Math.ceil(articles.value.length / articlesPerPage);
+    });
+
+    const nextArticlePage = () => {
+      if (currentArticlePage.value < totalArticlePages.value) {
+        currentArticlePage.value++;
       }
-    ];
+    };
+
+    const prevArticlePage = () => {
+      if (currentArticlePage.value > 1) {
+        currentArticlePage.value--;
+      }
+    };
 
     return {
       currentLanguage,
       translations,
-      articles
+      articles,
+      paginatedArticles,
+      currentArticlePage,
+      totalArticlePages,
+      nextArticlePage,
+      prevArticlePage,
+      loading,
+      error
     };
   }
 }
