@@ -11,7 +11,7 @@
             'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200': index === 0,
             'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200': index !== 0
           }">
-          {{ translations.tags[tag][currentLanguage] }}
+          {{ tag }}
         </span>
       </div>
       <h1 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -30,23 +30,30 @@
 
     <!-- Article Content -->
     <article class="prose dark:prose-invert max-w-3xl mx-auto mb-16">
-      <h2>{{ translations.content.intro[currentLanguage] }}</h2>
-      <p>{{ translations.content.introText[currentLanguage] }}</p>
+      <p>{{ article.content.introText[currentLanguage] }}</p>
+      <p>{{ article.body }}</p>
+      <p>{{ article.content.conclusionText[currentLanguage] }}</p>
+
+      <!--
+      <h2>{{ article.content.intro[currentLanguage] }}</h2>
+      <p>{{ article.content.introText[currentLanguage] }}</p>
       
-      <h2>{{ translations.content.features[currentLanguage] }}</h2>
+      <h2>{{ article.content.features[currentLanguage] }}</h2>
       <ul>
-        <li v-for="(feature, index) in translations.content.featureList[currentLanguage]" :key="index">
+        <li v-for="(feature, index) in article.content.featureList[currentLanguage]" :key="index">
           {{ feature }}
         </li>
       </ul>
 
-      <h2>{{ translations.content.conclusion[currentLanguage] }}</h2>
-      <p>{{ translations.content.conclusionText[currentLanguage] }}</p>
+      <h2>{{ article.content.conclusion[currentLanguage] }}</h2>
+      <p>{{ article.content.conclusionText[currentLanguage] }}</p>
 
       <div class="bg-blue-50 dark:bg-blue-900 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
-        <h3 class="text-blue-800 dark:text-blue-200 mt-0">{{ translations.content.tip[currentLanguage] }}</h3>
-        <p class="text-blue-700 dark:text-blue-300 mb-0">{{ translations.content.tipText[currentLanguage] }}</p>
+        <h3 class="text-blue-800 dark:text-blue-200 mt-0">{{ article.content.tip[currentLanguage] }}</h3>
+        <p class="text-blue-700 dark:text-blue-300 mb-0">{{ article.content.tipText[currentLanguage] }}</p>
       </div>
+      -->
+
     </article>
 
     <!-- Author Info -->
@@ -56,8 +63,8 @@
           <span class="text-2xl">👨‍💻</span>
         </div>
         <div>
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ translations.author.name[currentLanguage] }}</h3>
-          <p class="text-gray-600 dark:text-gray-300">{{ translations.author.position[currentLanguage] }}</p>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ article.author.name[currentLanguage] }}</h3>
+          <p class="text-gray-600 dark:text-gray-300">{{ article.author.position[currentLanguage] }}</p>
         </div>
       </div>
     </div>
@@ -96,18 +103,107 @@
         </router-link>
       </div>
     </section>
-
-
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { currentLanguage } from '../stores/language';
 
 export default {
   name: 'BlogPost',
   setup() {
+    const route = useRoute()
+    const article = ref({
+      tags: [],
+      title: { ru: '', en: '' },
+      date: { ru: '', en: '' },
+      readTime: { ru: '', en: '' },
+      emoji: '',
+      content: {
+        intro: { ru: '', en: '' },
+        introText: { ru: '', en: '' },
+        features: { ru: '', en: '' },
+        featureList: { ru: [], en: [] },
+        conclusion: { ru: '', en: '' },
+        conclusionText: { ru: '', en: '' },
+        tip: { ru: '', en: '' },
+        tipText: { ru: '', en: '' }
+      },
+      author: {
+        name: { ru: '', en: '' },
+        position: { ru: '', en: '' }
+      }
+    })
+    const loading = ref(true)
+    const error = ref(null)
+
+    function calculateReadTime(text) {
+      if (!text) return 0;
+      const wordCount = text.trim().split(/\s+/).length;
+      return Math.max(1, Math.ceil(wordCount / 200));
+    }
+
+    async function fetchArticle(id) {
+      try {
+        loading.value = true
+        const response = await fetch(`https://api.github.com/repos/ti-rudin/ti-robots.ru/issues/${id}`)
+        if (!response.ok) throw new Error('Статья не найдена')
+        
+        const data = await response.json()
+        
+        article.value = {
+          tags: data.labels?.map(label => label.name.toLowerCase()) || [],
+          title: {
+            ru: data.title || 'Без названия',
+            en: ''
+          },
+          date: {
+            ru: new Date(data.created_at).toLocaleDateString('ru-RU'),
+            en: new Date(data.created_at).toLocaleDateString('en-US')
+          },
+          body: data.body.split('\n\n').slice(1, -1).join('\n\n') || '',
+          content: {
+            introText: {
+              ru: data.body?.split('\n\n')[0] || 'Введение отсутствует',
+              en: ''
+            },
+            conclusionText: {
+              ru: data.body?.split('\n\n').slice(-1)[0] || 'Заключение отсутствует',
+              en: ''
+            }
+          },
+          author: {
+            name: {
+              ru: data.user?.login || 'Автор',
+              en: data.user?.login || 'Author'
+            },
+            position: {
+              ru: 'Автор статьи',
+              en: 'Article author'
+            }
+          },
+          emoji: '🤖',
+          readTime: {
+            ru: `${calculateReadTime(data.body)} мин чтения`,
+            en: `${calculateReadTime(data.body)} min read`
+          }
+        }
+      } catch (err) {
+        error.value = err.message
+        console.error('Ошибка загрузки:', err)
+      } finally {
+        loading.value = false
+      }
+    }
+
+    onMounted(() => {
+      if (route.params.id) {
+        fetchArticle(route.params.id)
+      }
+    })
+
     const translations = {
       tags: {
         automation: {
@@ -217,23 +313,6 @@ export default {
       }
     };
 
-    const article = ref({
-      emoji: '📈',
-      tags: ['automation', 'trading', 'algorithms'],
-      title: {
-        ru: 'Оптимизация TSL бота для Binance: наш опыт',
-        en: 'Optimizing TSL Bot for Binance: Our Experience'
-      },
-      date: {
-        ru: '15 мая 2023',
-        en: 'May 15, 2023'
-      },
-      readTime: {
-        ru: '5 мин чтения',
-        en: '5 min read'
-      },
-      slug: 'tsl-bot-optimization'
-    });
 
     const relatedArticles = ref([
       {
@@ -292,7 +371,9 @@ export default {
     return {
       currentLanguage,
       translations,
+      loading,
       article,
+      error,
       relatedArticles
     };
   }

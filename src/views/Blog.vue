@@ -11,43 +11,43 @@
     </section>
 
     <!-- Featured Article -->
-    <section class="mb-16" v-if="featuredArticle">
-      <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
-        <div class="md:flex">
-          <div class="md:w-1/3 bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center p-8">
-            <span class="text-6xl text-indigo-600 dark:text-indigo-300">📌</span>
-          </div>
-          <div class="md:w-2/3 p-8">
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span 
-                v-for="tag in featuredArticle.tags.slice(0, 2)" 
-                :key="tag"
-                class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm font-medium">
-                {{ translations.tags[tag]?.[currentLanguage] || tag }}
-              </span>
-            </div>
-            <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-              {{ featuredArticle.title[currentLanguage] }}
-            </h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-4">
-              {{ featuredArticle.excerpt[currentLanguage] }}
-            </p>
-            <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-              <span class="mr-4">{{ featuredArticle.date[currentLanguage] }}</span>
-              <span>{{ featuredArticle.readTime[currentLanguage] }}</span>
-            </div>
-            <router-link 
-              :to="`/article/${featuredArticle.id}`" 
-              class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
-              {{ translations.readMore[currentLanguage] }}
-              <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-              </svg>
-            </router-link>
-          </div>
-        </div>
+<section class="mb-16" v-if="featuredArticle">
+  <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all">
+    <div class="md:flex">
+      <div class="md:w-1/3 bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center p-8">
+        <span class="text-6xl text-indigo-600 dark:text-indigo-300">📌</span>
       </div>
-    </section>
+      <div class="md:w-2/3 p-8">
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span 
+            v-for="tag in featuredArticle.tags.slice(0, 2)" 
+            :key="tag"
+            class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 rounded-full text-sm font-medium">
+            {{ translations.tags[tag]?.[currentLanguage] || tag }}
+          </span>
+        </div>
+        <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+          {{ featuredArticle.title[currentLanguage] }}
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          {{ featuredArticle.excerpt[currentLanguage] }}
+        </p>
+        <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+          <span class="mr-4">{{ featuredArticle.date[currentLanguage] }}</span>
+          <span>{{ featuredArticle.readTime[currentLanguage] }}</span>
+        </div>
+        <router-link 
+          :to="`/article/${featuredArticle.id}`" 
+          class="inline-flex items-center text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-medium">
+          {{ translations.readMore[currentLanguage] }}
+          <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </router-link>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- Tags Cloud -->
     <section class="mb-16">
@@ -69,42 +69,43 @@
       </div>
     </section>
 
-    <!-- Articles Grid -->
-    <section class="mb-16">
-      <h2 class="text-2xl font-semibold mb-8 text-center text-gray-900 dark:text-white">
-        {{ translations.latestArticles[currentLanguage] }}
-      </h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div 
-          v-for="(article, index) in paginatedArticles" 
-          :key="index"
-          class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:-translate-y-1">
-          <div class="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-            <span class="text-5xl">{{ article.emoji }}</span>
-          </div>
-          <div class="p-6">
-            <div class="flex flex-wrap gap-2 mb-3">
-              <span 
-                v-for="(tag, tagIndex) in article.tags" 
-                :key="tagIndex"
-                class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-xs font-medium">
-                {{ (translations.tags[tag] || {})[currentLanguage] || tag }}
-              </span>
-            </div>
-            <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">
-              {{ article.title[currentLanguage] }}
-            </h3>
-            <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
-              {{ article.excerpt[currentLanguage] }}
-            </p>
-            <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-              <span>{{ article.date[currentLanguage] }}</span>
-              <span>{{ article.readTime[currentLanguage] }}</span>
-            </div>
-          </div>
+<!-- Articles Grid -->
+<section class="mb-16">
+  <h2 class="text-2xl font-semibold mb-8 text-center text-gray-900 dark:text-white">
+    {{ translations.latestArticles[currentLanguage] }}
+  </h2>
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <router-link 
+      v-for="(article, index) in paginatedArticles" 
+      :key="index"
+      :to="`/article/${article.id}`"
+      class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all hover:-translate-y-1 block">
+      <div class="h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+        <span class="text-5xl">{{ article.emoji }}</span>
+      </div>
+      <div class="p-6">
+        <div class="flex flex-wrap gap-2 mb-3">
+          <span 
+            v-for="(tag, tagIndex) in article.tags" 
+            :key="tagIndex"
+            class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-xs font-medium">
+            {{ (translations.tags[tag] || {})[currentLanguage] || tag }}
+          </span>
+        </div>
+        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+          {{ article.title[currentLanguage] }}
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">
+          {{ article.excerpt[currentLanguage] }}
+        </p>
+        <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+          <span>{{ article.date[currentLanguage] }}</span>
+          <span>{{ article.readTime[currentLanguage] }}</span>
         </div>
       </div>
-    </section>
+    </router-link>
+  </div>
+</section>
 
     <!-- Pagination -->
     <section class="flex justify-center">
@@ -219,6 +220,7 @@ export default {
         const issues = await response.json();
         
         articles.value = issues.map((issue) => ({
+          id: issue.number,  // Добавляем ID статьи (issue number)
           emoji: "📄",
           tags: issue.labels?.map(label => label.name) || ["github"],
           title: {
