@@ -4,6 +4,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
           <div class="flex items-center space-x-4">
+            <router-link to="/">
             <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-3">
               <g clip-path="url(#clip0)">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -16,6 +17,7 @@
                 </clipPath>
               </defs>
             </svg>
+            </router-link>
           </div>
           
           <!-- Центрированное меню -->
